@@ -10,3 +10,5 @@
 /vendor/
 /web/bundles/
 /composer.lock
+/web/files/*
+!/web/files/.gitkeep

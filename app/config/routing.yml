@@ -1,3 +1,17 @@
 index:
     path: /
     defaults: { _controller: AppBundle:Default:index }
+
+project_index:
+    path: /projects/
+    defaults: { _controller: AppBundle:Default:projectIndex }
+
+project_add:
+    path: /projects/add/
+    defaults: { _controller: AppBundle:Default:projectAdd }
+
+project_detail:
+    path: /projects/show/{id}
+    defaults: { _controller: AppBundle:Default:projectDetail }
+    requirements:
+        id: \d+

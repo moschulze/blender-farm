@@ -1,0 +1,8 @@
+<a href="{{ path('project_add') }}">Add new</a>
+<table>
+    {% for project in projects %}
+        <tr>
+            <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.name }}</a></td>
+        </tr>
+    {% endfor %}
+</table>
