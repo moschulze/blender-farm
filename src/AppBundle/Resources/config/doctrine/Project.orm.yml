@@ -18,4 +18,9 @@ AppBundle\Entity\Project:
             type: integer
         frameEnd:
             type: integer
+
+    oneToMany:
+        frames:
+            targetEntity: AppBundle\Entity\Frame
+            mappedBy: product
     lifecycleCallbacks: {  }

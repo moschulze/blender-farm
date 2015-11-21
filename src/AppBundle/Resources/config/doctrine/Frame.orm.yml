@@ -1,0 +1,24 @@
+AppBundle\Entity\Frame:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        frameNumber:
+            type: integer
+        status:
+            type: string
+            length: '20'
+
+    manyToOne:
+        project:
+            targetEntity: AppBundle\Entity\Project
+            inversedBy: frames
+            joinColumn:
+                name: projectId
+                referencedColumnName: id
+    lifecycleCallbacks: {  }

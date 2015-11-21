@@ -2,11 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Frame;
 use AppBundle\Entity\Project;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class DefaultController extends Controller
 {
@@ -58,6 +60,36 @@ class DefaultController extends Controller
 
         return $this->render('AppBundle::project_add_edit.html.twig', array(
             'project' => $project
+        ));
+    }
+
+    public function projectQueueAction(Request $request)
+    {
+        $id = $request->get('id');
+        $doctrine = $this->getDoctrine();
+        $project = $doctrine->getRepository('AppBundle:Project')->find($id);
+
+        if(is_null($project)) {
+            throw new NotFoundHttpException('Project with id ' . $id . ' not found');
+        }
+
+        if($project->getStatus() !== Project::STATUS_NEW) {
+            throw new UnprocessableEntityHttpException('Project with id ' . $id . ' is not new');
+        }
+
+        for($i = $project->getFrameStart(); $i <= $project->getFrameEnd(); $i++) {
+            $frame = new Frame();
+            $frame->setFrameNumber($i);
+            $frame->setProject($project);
+            $frame->setStatus(Frame::STATUS_PENDING);
+            $doctrine->getManager()->persist($frame);
+        }
+
+        $project->setStatus(Project::STATUS_QUEUED);
+        $doctrine->getManager()->flush();
+
+        return $this->redirectToRoute('project_detail', array(
+            'id' => $project->getId()
         ));
     }
 }

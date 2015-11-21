@@ -145,4 +145,50 @@ class Project
     {
         return $this->frameEnd;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $frames;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->frames = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add frame
+     *
+     * @param \AppBundle\Entity\Frame $frame
+     *
+     * @return Project
+     */
+    public function addFrame(\AppBundle\Entity\Frame $frame)
+    {
+        $this->frames[] = $frame;
+
+        return $this;
+    }
+
+    /**
+     * Remove frame
+     *
+     * @param \AppBundle\Entity\Frame $frame
+     */
+    public function removeFrame(\AppBundle\Entity\Frame $frame)
+    {
+        $this->frames->removeElement($frame);
+    }
+
+    /**
+     * Get frames
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFrames()
+    {
+        return $this->frames;
+    }
 }
