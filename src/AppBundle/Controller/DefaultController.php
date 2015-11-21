@@ -42,13 +42,15 @@ class DefaultController extends Controller
 
         if($request->getMethod() == Request::METHOD_POST) {
             $project->setName($request->get('name'));
+            $project->setFrameStart($request->get('frameStart'));
+            $project->setFrameEnd($request->get('frameEnd'));
             $project->setStatus(Project::STATUS_NEW);
             $this->getDoctrine()->getManager()->persist($project);
             $this->getDoctrine()->getManager()->flush();
 
             /** @var UploadedFile $file */
             $file = $request->files->get('file');
-            $filePath = __DIR__.'/../../../web/files/'.$project->getId().'/';
+            $filePath = __DIR__.'/../../../files/'.$project->getId().'/';
             mkdir($filePath);
             $file->move($filePath, 'project.blend');
             return $this->redirectToRoute('project_index');

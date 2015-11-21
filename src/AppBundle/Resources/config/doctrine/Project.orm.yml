@@ -14,4 +14,8 @@ AppBundle\Entity\Project:
         status:
             type: string
             length: 20
+        frameStart:
+            type: integer
+        frameEnd:
+            type: integer
     lifecycleCallbacks: {  }

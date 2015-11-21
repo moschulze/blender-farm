@@ -8,7 +8,7 @@ namespace AppBundle\Entity;
 class Project
 {
     const STATUS_NEW        = 'NEW';
-    const STATUS_WAITING    = 'WAITING';
+    const STATUS_QUEUED     = 'QUEUED';
     const STATUS_RENDERING  = 'RENDERING';
     const STATUS_PAUSED     = 'PAUSED';
     const STATUS_STOPPED    = 'STOPPED';
@@ -86,5 +86,63 @@ class Project
     public function getStatus()
     {
         return $this->status;
+    }
+    /**
+     * @var integer
+     */
+    private $frameStart;
+
+    /**
+     * @var integer
+     */
+    private $frameEnd;
+
+
+    /**
+     * Set frameStart
+     *
+     * @param integer $frameStart
+     *
+     * @return Project
+     */
+    public function setFrameStart($frameStart)
+    {
+        $this->frameStart = $frameStart;
+
+        return $this;
+    }
+
+    /**
+     * Get frameStart
+     *
+     * @return integer
+     */
+    public function getFrameStart()
+    {
+        return $this->frameStart;
+    }
+
+    /**
+     * Set frameEnd
+     *
+     * @param integer $frameEnd
+     *
+     * @return Project
+     */
+    public function setFrameEnd($frameEnd)
+    {
+        $this->frameEnd = $frameEnd;
+
+        return $this;
+    }
+
+    /**
+     * Get frameEnd
+     *
+     * @return integer
+     */
+    public function getFrameEnd()
+    {
+        return $this->frameEnd;
     }
 }
