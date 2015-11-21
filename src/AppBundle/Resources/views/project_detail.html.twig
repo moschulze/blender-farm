@@ -6,3 +6,8 @@
     <input type="submit">
 </form>
 {% endif %}
+{% if project.status == constant('AppBundle\\Entity\\Project::STATUS_QUEUED') or project.status == constant('AppBundle\\Entity\\Project::STATUS_RENDERING') %}
+    {% for frame in project.frames %}
+        Frame {{ frame.frameNumber }}: {{ frame.status }}<br>
+    {% endfor %}
+{% endif %}

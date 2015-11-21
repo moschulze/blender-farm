@@ -22,5 +22,5 @@ AppBundle\Entity\Project:
     oneToMany:
         frames:
             targetEntity: AppBundle\Entity\Frame
-            mappedBy: product
+            mappedBy: project
     lifecycleCallbacks: {  }
