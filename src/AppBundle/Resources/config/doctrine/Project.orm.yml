@@ -20,7 +20,7 @@ AppBundle\Entity\Project:
             type: integer
 
     oneToMany:
-        frames:
-            targetEntity: AppBundle\Entity\Frame
+        tasks:
+            targetEntity: AppBundle\Entity\Task
             mappedBy: project
     lifecycleCallbacks: {  }

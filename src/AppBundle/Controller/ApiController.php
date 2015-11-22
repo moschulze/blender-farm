@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Frame;
+use AppBundle\Entity\Task;
 use AppBundle\Entity\Project;
 use AppBundle\ProjectFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -10,38 +10,39 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class ApiController extends Controller
 {
     public function  workAction()
     {
-        $frames = $this->getDoctrine()->getRepository('AppBundle:Frame')->findByStatus(Frame::STATUS_PENDING);
+        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')->findByStatus(Task::STATUS_PENDING);
 
-        if(empty($frames)) {
+        if(empty($tasks)) {
             return new JsonResponse(array(
                 'status' => 'nothing to do',
+                'id' => 0,
                 'project' => 0,
                 'frame' => 0,
                 'md5' => ''
             ));
         }
 
-        /** @var Frame $frame */
-        $frame = array_shift($frames);
+        /** @var Task $task */
+        $task = array_shift($tasks);
 
-        $frame->setStatus(Frame::STATUS_RENDERING);
-        $frame->getProject()->setStatus(Project::STATUS_RENDERING);
+        $task->setStatus(Task::STATUS_RENDERING);
+        $task->getProject()->setStatus(Project::STATUS_RENDERING);
         $this->getDoctrine()->getManager()->flush();
 
         $fileRepository = new ProjectFileRepository();
-        $filePath = $fileRepository->getProjectFilePath($frame->getProject()->getId());
+        $filePath = $fileRepository->getProjectFilePath($task->getProject()->getId());
 
         return new JsonResponse(array(
             'status' => 'ok',
-            'project' => $frame->getProject()->getId(),
-            'frame' => $frame->getFrameNumber(),
+            'id' => $task->getId(),
+            'project' => $task->getProject()->getId(),
+            'frame' => $task->getFrameNumber(),
             'md5' => md5(file_get_contents($filePath))
         ));
     }

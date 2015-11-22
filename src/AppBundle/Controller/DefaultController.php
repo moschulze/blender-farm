@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Frame;
+use AppBundle\Entity\Task;
 use AppBundle\Entity\Project;
 use AppBundle\ProjectFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -78,11 +78,11 @@ class DefaultController extends Controller
         }
 
         for($i = $project->getFrameStart(); $i <= $project->getFrameEnd(); $i++) {
-            $frame = new Frame();
-            $frame->setFrameNumber($i);
-            $frame->setProject($project);
-            $frame->setStatus(Frame::STATUS_PENDING);
-            $doctrine->getManager()->persist($frame);
+            $task = new Task();
+            $task->setFrameNumber($i);
+            $task->setProject($project);
+            $task->setStatus(Task::STATUS_PENDING);
+            $doctrine->getManager()->persist($task);
         }
 
         $project->setStatus(Project::STATUS_QUEUED);

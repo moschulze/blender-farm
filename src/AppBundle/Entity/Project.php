@@ -148,47 +148,47 @@ class Project
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $frames;
+    private $tasks;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->frames = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tasks = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add frame
+     * Add task
      *
-     * @param \AppBundle\Entity\Frame $frame
+     * @param \AppBundle\Entity\Task $task
      *
      * @return Project
      */
-    public function addFrame(\AppBundle\Entity\Frame $frame)
+    public function addTask(\AppBundle\Entity\Task $task)
     {
-        $this->frames[] = $frame;
+        $this->tasks[] = $task;
 
         return $this;
     }
 
     /**
-     * Remove frame
+     * Remove task
      *
-     * @param \AppBundle\Entity\Frame $frame
+     * @param \AppBundle\Entity\Task $task
      */
-    public function removeFrame(\AppBundle\Entity\Frame $frame)
+    public function removeTask(\AppBundle\Entity\Task $task)
     {
-        $this->frames->removeElement($frame);
+        $this->tasks->removeElement($task);
     }
 
     /**
-     * Get frames
+     * Get tasks
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getFrames()
+    public function getTasks()
     {
-        return $this->frames;
+        return $this->tasks;
     }
 }

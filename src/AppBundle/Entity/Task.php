@@ -5,7 +5,7 @@ namespace AppBundle\Entity;
 /**
  * Frame
  */
-class Frame
+class Task
 {
     const STATUS_PENDING    = 'PENDING';
     const STATUS_RENDERING  = 'RENDERING';
@@ -47,7 +47,7 @@ class Frame
      *
      * @param integer $frameNumber
      *
-     * @return Frame
+     * @return Task
      */
     public function setFrameNumber($frameNumber)
     {
@@ -71,7 +71,7 @@ class Frame
      *
      * @param string $status
      *
-     * @return Frame
+     * @return Task
      */
     public function setStatus($status)
     {
@@ -95,7 +95,7 @@ class Frame
      *
      * @param \AppBundle\Entity\Project $project
      *
-     * @return Frame
+     * @return Task
      */
     public function setProject(\AppBundle\Entity\Project $project = null)
     {

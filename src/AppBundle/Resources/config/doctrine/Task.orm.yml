@@ -1,4 +1,4 @@
-AppBundle\Entity\Frame:
+AppBundle\Entity\Task:
     type: entity
     table: null
     id:

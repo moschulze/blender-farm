@@ -30,7 +30,7 @@ api_project:
     requirements:
         id: \d+
 
-api_project:
+api_upload:
     path: /api/upload/{id}/{frame}
     defaults: { _controller: AppBundle:Api:imageUpload }
     requirements:
