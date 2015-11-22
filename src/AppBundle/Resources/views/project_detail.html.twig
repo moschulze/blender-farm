@@ -1,15 +1,28 @@
-<h1>{{ project.name }}</h1>
-<p>Status: {{ project.status }}</p>
-<p>Format: {{ project.format }}</p>
-<p>Engine: {{ project.engine }}</p>
-{% if project.status == constant('AppBundle\\Entity\\Project::STATUS_NEW') %}
-<form method="post" action="{{ path('project_queue') }}">
-    <input type="hidden" name="id" value="{{ project.id }}">
-    <input type="submit">
-</form>
-{% endif %}
-{% if project.status == constant('AppBundle\\Entity\\Project::STATUS_QUEUED') or project.status == constant('AppBundle\\Entity\\Project::STATUS_RENDERING') %}
-    {% for task in project.tasks %}
-        Frame {{ task.frameNumber }}: {{ task.status }}<br>
-    {% endfor %}
-{% endif %}
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>{{ project.name }} details</h1>
+    <p><a href="{{ path('project_index') }}" class="btn btn-primary">Back to overview</a></p>
+    <p>Status: {{ project.status }}</p>
+    <p>Format: {{ project.format }}</p>
+    <p>Engine: {{ project.engine }}</p>
+    {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_NEW') %}
+    <form method="post" action="{{ path('project_queue') }}">
+        <input type="hidden" name="id" value="{{ project.id }}">
+        <input type="submit">
+    </form>
+    {% endif %}
+    {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_QUEUED') or project.status == constant('AppBundle\\Entity\\Project::STATUS_RENDERING') %}
+        {% for task in project.tasks %}
+            {% set background = 'bg-success' %}
+            {% if task.status == constant('AppBundle\\Entity\\Task::STATUS_FINISHED') %}
+                {% set background = 'bg-success' %}
+            {% elseif task.status == constant('AppBundle\\Entity\\Task::STATUS_RENDERING') %}
+                {% set background = 'bg-info' %}
+            {% endif %}
+            <div class="col-md-4 {{ background }}">
+                <h3>Frame {{ task.frameNumber }}</h3>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}

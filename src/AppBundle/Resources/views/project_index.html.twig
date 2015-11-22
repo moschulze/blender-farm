@@ -1,8 +1,26 @@
-<a href="{{ path('project_add') }}">Add new</a>
-<table>
-    {% for project in projects %}
-        <tr>
-            <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.name }}</a></td>
-        </tr>
-    {% endfor %}
-</table>
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>Projects</h1>
+    <p><a href="{{ path('project_add') }}" class="btn btn-primary">Add new</a></p>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Format</td>
+                <td>Frames</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.name }}</a></td>
+                    <td>{{ project.format }}</td>
+                    <td>{{ (project.frameEnd - project.frameStart) + 1 }}</td>
+                    <td>{{ project.status }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
