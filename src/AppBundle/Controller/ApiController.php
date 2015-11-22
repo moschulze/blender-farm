@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ApiController extends Controller
 {
@@ -61,11 +62,23 @@ class ApiController extends Controller
         return $response;
     }
 
-    public function imageUploadAction(Request $request, $id, $frame)
+    public function imageUploadAction(Request $request, $id)
     {
+        $task = $this->getDoctrine()
+            ->getRepository('AppBundle:Task')
+            ->find($id);
+
+        if(is_null($task)) {
+            throw new NotFoundHttpException('task with id ' . $id);
+        }
+
         $file = $request->files->get('file');
         $fileRepository = new ProjectFileRepository();
-        $fileRepository->addFrameImage($file, $id, $frame);
+        $fileRepository->addFrameImage($file, $task->getProject()->getId(), $task->getFrameNumber());
+
+        $task->setStatus(Task::STATUS_FINISHED);
+        $this->getDoctrine()->getManager()->flush();
+
         return new JsonResponse(array(
             'status' => 'ok'
         ));

@@ -28,6 +28,6 @@ class ProjectFileRepository
 
     public function addFrameImage(File $file, $projectId, $frameNumber)
     {
-        $file->move($this->path . $projectId, $frameNumber . '.' . $file->getExtension());
+        $file->move($this->path . $projectId, sprintf("frame%'.05d", $frameNumber));
     }
 }

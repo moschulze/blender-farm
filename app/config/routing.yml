@@ -31,7 +31,7 @@ api_project:
         id: \d+
 
 api_upload:
-    path: /api/upload/{id}/{frame}
+    path: /api/upload/{id}
     defaults: { _controller: AppBundle:Api:imageUpload }
     requirements:
         id: \d+
