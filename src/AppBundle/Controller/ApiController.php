@@ -26,6 +26,7 @@ class ApiController extends Controller
                 'project' => 0,
                 'frame' => 0,
                 'format' => '',
+                'engine' => '',
                 'md5' => ''
             ));
         }
@@ -46,6 +47,7 @@ class ApiController extends Controller
             'project' => $task->getProject()->getId(),
             'frame' => $task->getFrameNumber(),
             'format' => $task->getProject()->getFormat(),
+            'engine' => $task->getProject()->getEngine(),
             'md5' => md5(file_get_contents($filePath))
         ));
     }

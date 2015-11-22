@@ -2,3 +2,6 @@ parameters:
   image_formats:
     PNG: png
     JPEG: jpg
+  rendering_engines:
+    BLENDER_RENDER: Blender Render
+    CYCLES: Cycles

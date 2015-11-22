@@ -42,6 +42,7 @@ class DefaultController extends Controller
     public function projectAddAction(Request $request)
     {
         $imageFormats = $this->getParameter('image_formats');
+        $renderingEngines = $this->getParameter('rendering_engines');
         $project = new Project();
 
         if($request->getMethod() == Request::METHOD_POST) {
@@ -49,6 +50,7 @@ class DefaultController extends Controller
             $project->setFrameStart($request->get('frameStart'));
             $project->setFrameEnd($request->get('frameEnd'));
             $project->setFormat($request->get('format'));
+            $project->setEngine($request->get('engine'));
             $project->setStatus(Project::STATUS_NEW);
             $this->getDoctrine()->getManager()->persist($project);
             $this->getDoctrine()->getManager()->flush();
@@ -62,7 +64,8 @@ class DefaultController extends Controller
 
         return $this->render('AppBundle::project_add_edit.html.twig', array(
             'project' => $project,
-            'imageFormats' => $imageFormats
+            'imageFormats' => $imageFormats,
+            'renderingEngines' => $renderingEngines
         ));
     }
 

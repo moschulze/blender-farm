@@ -9,5 +9,10 @@
             <option value="{{ key }}">{{ key }} (.{{ value }})</option>
         {% endfor %}
     </select>
+    <select name="engine">
+        {% for key, value in renderingEngines %}
+            <option value="{{ key }}">{{ value }}</option>
+        {% endfor %}
+    </select>
     <input type="submit">
 </form>

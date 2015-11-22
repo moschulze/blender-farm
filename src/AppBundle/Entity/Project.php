@@ -220,4 +220,33 @@ class Project
     {
         return $this->format;
     }
+    /**
+     * @var string
+     */
+    private $engine;
+
+
+    /**
+     * Set engine
+     *
+     * @param string $engine
+     *
+     * @return Project
+     */
+    public function setEngine($engine)
+    {
+        $this->engine = $engine;
+
+        return $this;
+    }
+
+    /**
+     * Get engine
+     *
+     * @return string
+     */
+    public function getEngine()
+    {
+        return $this->engine;
+    }
 }
