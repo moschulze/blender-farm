@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Frame;
 use AppBundle\Entity\Project;
+use AppBundle\ProjectFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,9 +53,8 @@ class DefaultController extends Controller
 
             /** @var UploadedFile $file */
             $file = $request->files->get('file');
-            $filePath = __DIR__.'/../../../files/'.$project->getId().'/';
-            mkdir($filePath);
-            $file->move($filePath, 'project.blend');
+            $fileRepository = new ProjectFileRepository();
+            $fileRepository->addProjectFile($file, $project->getId());
             return $this->redirectToRoute('project_index');
         }
 
