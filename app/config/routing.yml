@@ -3,11 +3,11 @@ index:
     defaults: { _controller: AppBundle:Default:index }
 
 project_index:
-    path: /projects/
+    path: /projects
     defaults: { _controller: AppBundle:Default:projectIndex }
 
 project_add:
-    path: /projects/add/
+    path: /projects/add
     defaults: { _controller: AppBundle:Default:projectAdd }
 
 project_detail:
@@ -19,3 +19,19 @@ project_detail:
 project_queue:
     path: /projects/queue
     defaults: { _controller: AppBundle:Default:projectQueue }
+
+api_work_request:
+    path: /api/work/
+    defaults: { _controller: AppBundle:Api:work }
+
+api_project:
+    path: /api/project/{id}
+    defaults: { _controller: AppBundle:Api:project }
+    requirements:
+        id: \d+
+
+api_project:
+    path: /api/upload/{id}/{frame}
+    defaults: { _controller: AppBundle:Api:imageUpload }
+    requirements:
+        id: \d+

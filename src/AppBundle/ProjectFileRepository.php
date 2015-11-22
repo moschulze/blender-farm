@@ -25,4 +25,9 @@ class ProjectFileRepository
         }
         $file->move($this->path . $projectId, 'project.blend');
     }
+
+    public function addFrameImage(File $file, $projectId, $frameNumber)
+    {
+        $file->move($this->path . $projectId, $frameNumber . '.' . $file->getExtension());
+    }
 }
