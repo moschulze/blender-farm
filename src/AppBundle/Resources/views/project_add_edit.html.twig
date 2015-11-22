@@ -5,7 +5,9 @@
     <input type="text" name="frameStart">
     <input type="text" name="frameEnd">
     <select name="format">
-        <option value="PNG">PNG</option>
+        {% for key, value in imageFormats %}
+            <option value="{{ key }}">{{ key }} (.{{ value }})</option>
+        {% endfor %}
     </select>
     <input type="submit">
 </form>

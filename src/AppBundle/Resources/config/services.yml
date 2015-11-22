@@ -1,0 +1,4 @@
+parameters:
+  image_formats:
+    PNG: png
+    JPEG: jpg

@@ -41,6 +41,7 @@ class DefaultController extends Controller
 
     public function projectAddAction(Request $request)
     {
+        $imageFormats = $this->getParameter('image_formats');
         $project = new Project();
 
         if($request->getMethod() == Request::METHOD_POST) {
@@ -60,7 +61,8 @@ class DefaultController extends Controller
         }
 
         return $this->render('AppBundle::project_add_edit.html.twig', array(
-            'project' => $project
+            'project' => $project,
+            'imageFormats' => $imageFormats
         ));
     }
 

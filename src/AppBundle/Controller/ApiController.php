@@ -74,13 +74,16 @@ class ApiController extends Controller
             throw new NotFoundHttpException('task with id ' . $id);
         }
 
+        $imageFormats = $this->getParameter('image_formats');
+        $fileExtension = $imageFormats[$task->getProject()->getFormat()];
+
         $file = $request->files->get('file');
         $fileRepository = new ProjectFileRepository();
         $fileRepository->addFrameImage(
             $file,
             $task->getProject()->getId(),
             $task->getFrameNumber(),
-            $task->getProject()->getFormat()
+            $fileExtension
         );
 
         $task->setStatus(Task::STATUS_FINISHED);
