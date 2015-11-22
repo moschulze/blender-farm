@@ -25,6 +25,7 @@ class ApiController extends Controller
                 'id' => 0,
                 'project' => 0,
                 'frame' => 0,
+                'format' => '',
                 'md5' => ''
             ));
         }
@@ -44,6 +45,7 @@ class ApiController extends Controller
             'id' => $task->getId(),
             'project' => $task->getProject()->getId(),
             'frame' => $task->getFrameNumber(),
+            'format' => $task->getProject()->getFormat(),
             'md5' => md5(file_get_contents($filePath))
         ));
     }
@@ -74,7 +76,12 @@ class ApiController extends Controller
 
         $file = $request->files->get('file');
         $fileRepository = new ProjectFileRepository();
-        $fileRepository->addFrameImage($file, $task->getProject()->getId(), $task->getFrameNumber());
+        $fileRepository->addFrameImage(
+            $file,
+            $task->getProject()->getId(),
+            $task->getFrameNumber(),
+            $task->getProject()->getFormat()
+        );
 
         $task->setStatus(Task::STATUS_FINISHED);
         $this->getDoctrine()->getManager()->flush();

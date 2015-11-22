@@ -8,6 +8,8 @@ class ProjectFileRepository
 {
     private $path = '';
 
+    private $frameNumberLength = 5;
+
     public function __construct()
     {
         $this->path = __DIR__ . '/../../files/';
@@ -26,8 +28,8 @@ class ProjectFileRepository
         $file->move($this->path . $projectId, 'project.blend');
     }
 
-    public function addFrameImage(File $file, $projectId, $frameNumber)
+    public function addFrameImage(File $file, $projectId, $frameNumber, $extension)
     {
-        $file->move($this->path . $projectId, sprintf("frame%'.05d", $frameNumber));
+        $file->move($this->path . $projectId, sprintf("frame_%'.0" . $this->frameNumberLength . "d", $frameNumber) . '.' . $extension);
     }
 }

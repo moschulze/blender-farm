@@ -1,5 +1,6 @@
 <h1>{{ project.name }}</h1>
 <p>Status: {{ project.status }}</p>
+<p>Format: {{ project.format }}</p>
 {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_NEW') %}
 <form method="post" action="{{ path('project_queue') }}">
     <input type="hidden" name="id" value="{{ project.id }}">

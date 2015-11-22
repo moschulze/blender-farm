@@ -18,6 +18,9 @@ AppBundle\Entity\Project:
             type: integer
         frameEnd:
             type: integer
+        format:
+            type: string
+            length: 10
 
     oneToMany:
         tasks:
