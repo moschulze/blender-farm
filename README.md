@@ -9,6 +9,8 @@ The BlenderFarm is a tool to easily split the rendering in blender to multiple m
 
 You can easily upload your project via browser and configure the frames to render, the output format and the rendering engine. When you're happy with your configuration you can start the rendering process with a single click and check the progress in your browser.
 
+The rending is done on clients. They request rendering tasks from the manage server and use a locally installed version of [Blender](http://www.blender.org) to complete them. After completion they upload the result to the server so it can be viewed and downloaded from you.
+
 This repository contains the software that manages the projects and coordinates the rendering tasks. It is based on the popular [Symfony PHP framework](https://symfony.com/). The software for the render nodes could be found [here](https://github.com/moschulze/blender-farm-client).
 
 ##Requirements
@@ -16,9 +18,11 @@ You need a MySQL database for BlenderFarm to store its data. The software itself
 
 ##Installation
 ###File setup
-Download (or clone) the content of this repository to your server. Make sure that the directories app/cache and app/logs are writable for the web server:
+Download (or clone) the content of this repository to your server. Make sure that the required directories are writable for the web server:
 
-     chmod a+rw app/cache/ app/logs/
+```sh
+chmod a+rw app/cache/ app/logs/ files/
+```
  
 The doc root of the web server has to point into the web/ directory.
   
@@ -28,19 +32,25 @@ Copy the file app/config/parameters.yml.dist to app/config/parameters.yml and op
 ###Downloading external packages
 In a terminal navigate to the root folder of the installation. Here you can run the following two commands to download the required external packages:
 
-    curl -sS https://getcomposer.org/installer | php
-    ./composer.phar install
+```sh
+curl -sS https://getcomposer.org/installer | php
+./composer.phar install
+```
 
 This might take a short time.
 
 ###Database setup
 If you haven't created the configured database yet you can use the following console command to do so:
 
-    app/console doctrine:database:create
+```sh
+app/console doctrine:database:create
+```
     
 To create the required database schema run:
 
-    app/console doctrine:schema:create
+```sh
+app/console doctrine:schema:create
+```
 
 ###Done
 Congratulations, You successfully installed the manage server for your BlenderFarm!
