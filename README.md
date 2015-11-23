@@ -30,7 +30,7 @@ The doc root of the web server has to point into the web/ directory.
 Copy the file app/config/parameters.yml.dist to app/config/parameters.yml and open it. Now edit the parameters for the database connection so they match your setup. If you use the default database port you don't need to change this value.
 
 ###Downloading external packages
-In a terminal navigate to the root folder of the installation. Here you can run the following two commands to download the required external packages:
+In a terminal navigate to the root folder of the installation. Here you need to run the following two commands to download the required external packages:
 
 ```sh
 curl -sS https://getcomposer.org/installer | php
