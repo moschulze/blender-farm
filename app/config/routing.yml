@@ -41,3 +41,9 @@ api_upload:
   defaults: { _controller: AppBundle:Api:imageUpload }
   requirements:
     id: \d+
+
+api_task_report:
+  path: /api/task/{id}/report
+  defaults: { _controller: AppBundle:Api:taskReport }
+  requirements:
+    id: \d+

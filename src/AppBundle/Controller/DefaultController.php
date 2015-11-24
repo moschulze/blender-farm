@@ -89,6 +89,9 @@ class DefaultController extends Controller
             $task->setFrameNumber($i);
             $task->setProject($project);
             $task->setStatus(Task::STATUS_PENDING);
+            $task->setRuntime(0);
+            $task->setRemaining(0);
+            $task->setProgress(0);
             $doctrine->getManager()->persist($task);
         }
 

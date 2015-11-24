@@ -113,4 +113,91 @@ class Task
     {
         return $this->project;
     }
+    /**
+     * @var integer
+     */
+    private $runtime;
+
+    /**
+     * @var integer
+     */
+    private $remaining;
+
+    /**
+     * @var float
+     */
+    private $progress;
+
+
+    /**
+     * Set runtime
+     *
+     * @param integer $runtime
+     *
+     * @return Task
+     */
+    public function setRuntime($runtime)
+    {
+        $this->runtime = $runtime;
+
+        return $this;
+    }
+
+    /**
+     * Get runtime
+     *
+     * @return integer
+     */
+    public function getRuntime()
+    {
+        return $this->runtime;
+    }
+
+    /**
+     * Set remaining
+     *
+     * @param integer $remaining
+     *
+     * @return Task
+     */
+    public function setRemaining($remaining)
+    {
+        $this->remaining = $remaining;
+
+        return $this;
+    }
+
+    /**
+     * Get remaining
+     *
+     * @return integer
+     */
+    public function getRemaining()
+    {
+        return $this->remaining;
+    }
+
+    /**
+     * Set progress
+     *
+     * @param float $progress
+     *
+     * @return Task
+     */
+    public function setProgress($progress)
+    {
+        $this->progress = $progress;
+
+        return $this;
+    }
+
+    /**
+     * Get progress
+     *
+     * @return float
+     */
+    public function getProgress()
+    {
+        return $this->progress;
+    }
 }

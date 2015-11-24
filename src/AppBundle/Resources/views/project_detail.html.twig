@@ -19,6 +19,9 @@
                     <tr>
                         <th class="col-md-1">#</th>
                         <th>Status</th>
+                        <th>Runtime</th>
+                        <th>Remaining</th>
+                        <th>Progress</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -35,6 +38,9 @@
                         <tr class="{{ background }}">
                             <td>{{ task.frameNumber }}</td>
                             <td>{{ task.status }}</td>
+                            <td>{{ task.runtime }}s</td>
+                            <td>{{ task.remaining }}s</td>
+                            <td>{{ (task.progress * 100)|number_format(2) }}%</td>
                             <td>{% if showImage %}<a href="{{ path('task_image', {'id': task.id}) }}" target="_blank">Show image</a>{% else %}&nbsp;{% endif %}</td>
                         </tr>
                     {% endfor %}

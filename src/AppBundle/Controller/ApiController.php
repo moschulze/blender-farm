@@ -73,7 +73,7 @@ class ApiController extends Controller
             ->find($id);
 
         if(is_null($task)) {
-            throw new NotFoundHttpException('task with id ' . $id);
+            throw new NotFoundHttpException('Task with id ' . $id);
         }
 
         $imageFormats = $this->getParameter('image_formats');
@@ -89,6 +89,29 @@ class ApiController extends Controller
         );
 
         $task->setStatus(Task::STATUS_FINISHED);
+        $task->setRemaining(0);
+        $task->setProgress(1);
+        $task->setRuntime($request->get('runtime'));
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse(array(
+            'status' => 'ok'
+        ));
+    }
+
+    public function taskReportAction(Request $request, $id)
+    {
+        $task = $this->getDoctrine()
+            ->getRepository('AppBundle:Task')
+            ->find($id);
+
+        if(is_null($task)) {
+            throw new NotFoundHttpException('Task with id ' . $id);
+        }
+
+        $task->setRuntime($request->get('runtime'));
+        $task->setRemaining($request->get('remaining'));
+        $task->setProgress($request->get('progress'));
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(array(

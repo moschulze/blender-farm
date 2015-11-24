@@ -13,6 +13,12 @@ AppBundle\Entity\Task:
         status:
             type: string
             length: '20'
+        runtime:
+            type: float
+        remaining:
+            type: float
+        progress:
+            type: float
 
     manyToOne:
         project:
