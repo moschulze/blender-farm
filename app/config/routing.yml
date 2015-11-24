@@ -1,37 +1,43 @@
 index:
-    path: /
-    defaults: { _controller: AppBundle:Default:index }
+  path: /
+  defaults: { _controller: AppBundle:Default:index }
 
 project_index:
-    path: /projects
-    defaults: { _controller: AppBundle:Default:projectIndex }
+  path: /projects
+  defaults: { _controller: AppBundle:Default:projectIndex }
 
 project_add:
-    path: /projects/add
-    defaults: { _controller: AppBundle:Default:projectAdd }
+  path: /projects/add
+  defaults: { _controller: AppBundle:Default:projectAdd }
 
 project_detail:
-    path: /projects/show/{id}
-    defaults: { _controller: AppBundle:Default:projectDetail }
-    requirements:
-        id: \d+
+  path: /projects/show/{id}
+  defaults: { _controller: AppBundle:Default:projectDetail }
+  requirements:
+    id: \d+
 
 project_queue:
-    path: /projects/queue
-    defaults: { _controller: AppBundle:Default:projectQueue }
+  path: /projects/queue
+  defaults: { _controller: AppBundle:Default:projectQueue }
+
+task_image:
+  path: /task/{id}/image
+  defaults: { _controller: AppBundle:Default:taskImage }
+  requirements:
+    id: \d+
 
 api_work_request:
-    path: /api/work/
-    defaults: { _controller: AppBundle:Api:work }
+  path: /api/work/
+  defaults: { _controller: AppBundle:Api:work }
 
 api_project:
-    path: /api/project/{id}
-    defaults: { _controller: AppBundle:Api:project }
-    requirements:
-        id: \d+
+  path: /api/project/{id}
+  defaults: { _controller: AppBundle:Api:project }
+  requirements:
+    id: \d+
 
 api_upload:
-    path: /api/upload/{id}
-    defaults: { _controller: AppBundle:Api:imageUpload }
-    requirements:
-        id: \d+
+  path: /api/upload/{id}
+  defaults: { _controller: AppBundle:Api:imageUpload }
+  requirements:
+    id: \d+

@@ -6,6 +6,7 @@ use AppBundle\Entity\Task;
 use AppBundle\Entity\Project;
 use AppBundle\ProjectFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -97,5 +98,34 @@ class DefaultController extends Controller
         return $this->redirectToRoute('project_detail', array(
             'id' => $project->getId()
         ));
+    }
+
+    public function taskImageAction($id)
+    {
+        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->find($id);
+
+        if(is_null($task)) {
+            throw new NotFoundHttpException('task with id ' . $id);
+        }
+
+        $imageFormats = $this->getParameter('image_formats');
+        $fileExtension = $imageFormats[$task->getProject()->getFormat()];
+        $fileRepository = new ProjectFileRepository();
+        $imagePath = $fileRepository->getFrameImagePath($task, $fileExtension);
+
+        if(is_null($imagePath)) {
+            throw new NotFoundHttpException('image for task with id ' . $id);
+        }
+
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mimeType = finfo_file($finfo, $imagePath);
+        finfo_close($finfo);
+        return new BinaryFileResponse(
+            $imagePath,
+            200,
+            array(
+                'Content-Type' => $mimeType
+            )
+        );
     }
 }

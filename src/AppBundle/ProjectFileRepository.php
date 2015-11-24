@@ -2,6 +2,7 @@
 
 namespace AppBundle;
 
+use AppBundle\Entity\Task;
 use Symfony\Component\HttpFoundation\File\File;
 
 class ProjectFileRepository
@@ -30,6 +31,18 @@ class ProjectFileRepository
 
     public function addFrameImage(File $file, $projectId, $frameNumber, $extension)
     {
-        $file->move($this->path . $projectId, sprintf("frame_%'.0" . $this->frameNumberLength . "d", $frameNumber) . '.' . $extension);
+        $fileName = sprintf("frame_%'.0" . $this->frameNumberLength . "d", $frameNumber) . '.' . $extension;
+        $file->move($this->path . $projectId, $fileName);
+    }
+
+    public function getFrameImagePath(Task $task, $extension)
+    {
+        $fileName = sprintf("frame_%'.0" . $this->frameNumberLength . "d.%s", $task->getFrameNumber(), $extension);
+        $path = $this->path . $task->getProject()->getId() . '/' . $fileName;
+        if(!file_exists($path)) {
+            return null;
+        }
+
+        return $path;
     }
 }

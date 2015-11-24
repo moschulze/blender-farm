@@ -13,16 +13,33 @@
     </form>
     {% endif %}
     {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_QUEUED') or project.status == constant('AppBundle\\Entity\\Project::STATUS_RENDERING') %}
-        {% for task in project.tasks %}
-            {% set background = 'bg-success' %}
-            {% if task.status == constant('AppBundle\\Entity\\Task::STATUS_FINISHED') %}
-                {% set background = 'bg-success' %}
-            {% elseif task.status == constant('AppBundle\\Entity\\Task::STATUS_RENDERING') %}
-                {% set background = 'bg-info' %}
-            {% endif %}
-            <div class="col-md-4 {{ background }}">
-                <h3>Frame {{ task.frameNumber }}</h3>
-            </div>
-        {% endfor %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="col-md-1">#</th>
+                        <th>Status</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for task in project.tasks %}
+                        {% set background = '' %}
+                        {% set showImage = false %}
+                        {% if task.status == constant('AppBundle\\Entity\\Task::STATUS_FINISHED') %}
+                            {% set background = 'success' %}
+                            {% set showImage = true %}
+                        {% elseif task.status == constant('AppBundle\\Entity\\Task::STATUS_RENDERING') %}
+                            {% set background = 'info' %}
+                        {% endif %}
+                        <tr class="{{ background }}">
+                            <td>{{ task.frameNumber }}</td>
+                            <td>{{ task.status }}</td>
+                            <td>{% if showImage %}<a href="{{ path('task_image', {'id': task.id}) }}" target="_blank">Show image</a>{% else %}&nbsp;{% endif %}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     {% endif %}
 {% endblock %}

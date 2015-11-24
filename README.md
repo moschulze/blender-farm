@@ -64,5 +64,5 @@ Congratulations, You successfully installed the manage server for your BlenderFa
 - CPU / GPU rendering
 - Tiled rendering of stills
 - Better error handling
-- Preview images
 - Installer
+- Styling
