@@ -15,6 +15,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ApiController extends Controller
 {
+    public function statusAction()
+    {
+        return new JsonResponse(array(
+            'status' => 'ok'
+        ));
+    }
+
     public function  workAction()
     {
         $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')->findByStatus(Task::STATUS_PENDING);

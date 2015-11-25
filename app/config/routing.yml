@@ -26,8 +26,12 @@ task_image:
   requirements:
     id: \d+
 
+api_status:
+  path: /api/status
+  defaults: { _controller: AppBundle:Api:status }
+
 api_work_request:
-  path: /api/work/
+  path: /api/work
   defaults: { _controller: AppBundle:Api:work }
 
 api_project:
