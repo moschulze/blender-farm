@@ -1,6 +1,7 @@
 AppBundle\Entity\Task:
     type: entity
     table: null
+    repositoryClass: AppBundle\Entity\TaskRepository
     id:
         id:
             type: integer

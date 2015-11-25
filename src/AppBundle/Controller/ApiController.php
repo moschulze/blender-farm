@@ -75,9 +75,8 @@ class ApiController extends Controller
 
     public function imageUploadAction(Request $request, $id)
     {
-        $task = $this->getDoctrine()
-            ->getRepository('AppBundle:Task')
-            ->find($id);
+        $taskRepository = $this->getDoctrine()->getRepository('AppBundle:Task');
+        $task = $taskRepository->find($id);
 
         if(is_null($task)) {
             throw new NotFoundHttpException('Task with id ' . $id);
@@ -99,6 +98,12 @@ class ApiController extends Controller
         $task->setRemaining(0);
         $task->setProgress(1);
         $task->setRuntime($request->get('runtime'));
+
+        $unfinishedTasks = $taskRepository->findUnfinishedTasksByProject($task->getProject());
+        if(empty($unfinishedTasks)) {
+            $task->getProject()->setStatus(Project::STATUS_FINISHED);
+        }
+
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(array(

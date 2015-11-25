@@ -57,7 +57,6 @@ Congratulations, You successfully installed the manage server for your BlenderFa
 
 ##ToDo
 - Download of rendering result
-- Switching of project status after renders
 - Pagination for overview page
 - API-Keys for clients
 - User management / Login
