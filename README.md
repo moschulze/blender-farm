@@ -65,3 +65,4 @@ Congratulations, You successfully installed the manage server for your BlenderFa
 - Better error handling
 - Installer
 - Styling
+- Email notifications
