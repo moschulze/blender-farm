@@ -38,7 +38,7 @@
                         {% elseif task.status == constant('AppBundle\\Entity\\Task::STATUS_RENDERING') %}
                             {% set background = 'info' %}
                         {% endif %}
-                        <tr class="{{ background }}">
+                        <tr class="{{ background }}" id="{{ task.id }}">
                             <td>{{ task.frameNumber }}</td>
                             <td>{{ task.status }}</td>
                             <td>{{ task.runtime }}s</td>
@@ -57,4 +57,13 @@
             </table>
         </div>
     {% endif %}
+{% endblock %}
+
+{% block additionalJs %}
+    <script>
+        var statusUrl = "{{ path('project_status_ajax', {'id': project.id}) }}";
+        var projectStatus = "{{ project.status }}";
+        var imageUrl = "{{ path('task_image', {'id': 42}) }}";
+    </script>
+    <script src="{{ asset('script/project_detail.js') }}"></script>
 {% endblock %}

@@ -26,6 +26,10 @@ project_queue:
   path: /projects/queue
   defaults: { _controller: AppBundle:Default:projectQueue }
 
+project_status_ajax:
+  path: /projects/{id}/status
+  defaults: { _controller: AppBundle:Default:projectStatus }
+
 task_image:
   path: /task/{id}/image
   defaults: { _controller: AppBundle:Default:taskImage }

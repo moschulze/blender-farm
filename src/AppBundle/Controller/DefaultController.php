@@ -8,6 +8,7 @@ use AppBundle\ProjectFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
@@ -111,7 +112,6 @@ class DefaultController extends Controller
             throw new NotFoundHttpException('task with id ' . $id);
         }
 
-        $imageFormats = $this->getParameter('image_formats');
         $fileRepository = $this->get('project_file_repository');
         $imagePath = $fileRepository->getFrameImagePath($task);
 
@@ -161,5 +161,28 @@ class DefaultController extends Controller
         $response->deleteFileAfterSend(true);
 
         return $response;
+    }
+
+    public function projectStatusAction($id)
+    {
+        $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
+
+        if(is_null($project)) {
+            throw new NotFoundHttpException('Project with id ' . $id);
+        }
+
+        $data = array();
+        foreach($project->getTasks() as $task) {
+            $data[] = array(
+                'id' => $task->getId(),
+                'frameNumber' => $task->getFrameNumber(),
+                'status' => $task->getStatus(),
+                'runtime' => $task->getRuntime(),
+                'remaining' => $task->getRemaining(),
+                'progress' => $task->getProgress()
+            );
+        }
+
+        return new JsonResponse($data);
     }
 }
