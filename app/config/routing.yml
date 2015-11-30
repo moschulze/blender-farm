@@ -16,6 +16,12 @@ project_detail:
   requirements:
     id: \d+
 
+project_download:
+  path: /projects/download/{id}
+  defaults: { _controller: AppBundle:Default:projectDownload }
+  requirements:
+    id: \d+
+
 project_queue:
   path: /projects/queue
   defaults: { _controller: AppBundle:Default:projectQueue }

@@ -131,4 +131,37 @@ class DefaultController extends Controller
             )
         );
     }
+
+    public function projectDownloadAction($id)
+    {
+        $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
+        $fileRepository = new ProjectFileRepository();
+        $imageFormats = $this->getParameter('image_formats');
+
+        if(is_null($project)) {
+            throw new NotFoundHttpException('Project with id ' . $id);
+        }
+
+        $file = tempnam('tmp', md5(microtime() . rand()));
+        $zip = new \ZipArchive();
+        $zip->open($file, \ZipArchive::OVERWRITE);
+        foreach($project->getTasks() as $task) {
+            $filePath = $fileRepository->getFrameImagePath($task, $imageFormats[$project->getFormat()]);
+            $zip->addFile($filePath, basename($filePath));
+        }
+        $zip->close();
+
+        $response = new BinaryFileResponse(
+            $file,
+            200,
+            array(
+                'Content-Type' => 'application/zip',
+                'Content-Length' => filesize($file),
+                'Content-Disposition' => 'attachment; filename="file.zip"'
+            )
+        );
+        $response->deleteFileAfterSend(true);
+
+        return $response;
+    }
 }

@@ -12,6 +12,9 @@
         <input type="submit">
     </form>
     {% endif %}
+    {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_FINISHED') %}
+        <a class="btn btn-primary" href="{{ path('project_download', {'id': project.id}) }}">Download result</a>
+    {% endif %}
     {% if project.status != constant('AppBundle\\Entity\\Project::STATUS_NEW') %}
         <div class="table-responsive">
             <table class="table">

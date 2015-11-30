@@ -56,7 +56,6 @@ app/console doctrine:schema:create
 Congratulations, You successfully installed the manage server for your BlenderFarm!
 
 ##ToDo
-- Download of rendering result
 - Pagination for overview page
 - API-Keys for clients
 - User management / Login
