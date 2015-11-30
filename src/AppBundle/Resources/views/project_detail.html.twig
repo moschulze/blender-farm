@@ -17,7 +17,7 @@
     {% endif %}
     {% if project.status != constant('AppBundle\\Entity\\Project::STATUS_NEW') %}
         <div class="table-responsive">
-            <table class="table">
+            <table class="table project-detail-table">
                 <thead>
                     <tr>
                         <th class="col-md-1">Frame</th>
@@ -44,7 +44,7 @@
                             <td>{{ task.runtime }}s</td>
                             <td>{{ task.remaining }}s</td>
                             <td>
-                                <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="{{ (task.progress * 100)|number_format(0) }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ (task.progress * 100)|number_format(0) }}%;">
                                         {{ (task.progress * 100)|number_format(0) }}%
                                     </div>
