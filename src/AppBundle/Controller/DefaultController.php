@@ -58,8 +58,8 @@ class DefaultController extends Controller
 
             /** @var UploadedFile $file */
             $file = $request->files->get('file');
-            $fileRepository = new ProjectFileRepository();
-            $fileRepository->addProjectFile($file, $project->getId());
+            $fileRepository = $this->get('project_file_repository');
+            $fileRepository->addProjectFile($file, $project);
             return $this->redirectToRoute('project_index');
         }
 
@@ -112,9 +112,8 @@ class DefaultController extends Controller
         }
 
         $imageFormats = $this->getParameter('image_formats');
-        $fileExtension = $imageFormats[$task->getProject()->getFormat()];
-        $fileRepository = new ProjectFileRepository();
-        $imagePath = $fileRepository->getFrameImagePath($task, $fileExtension);
+        $fileRepository = $this->get('project_file_repository');
+        $imagePath = $fileRepository->getFrameImagePath($task);
 
         if(is_null($imagePath)) {
             throw new NotFoundHttpException('image for task with id ' . $id);
@@ -135,8 +134,7 @@ class DefaultController extends Controller
     public function projectDownloadAction($id)
     {
         $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
-        $fileRepository = new ProjectFileRepository();
-        $imageFormats = $this->getParameter('image_formats');
+        $fileRepository =$this->get('project_file_repository');
 
         if(is_null($project)) {
             throw new NotFoundHttpException('Project with id ' . $id);
@@ -146,7 +144,7 @@ class DefaultController extends Controller
         $zip = new \ZipArchive();
         $zip->open($file, \ZipArchive::OVERWRITE);
         foreach($project->getTasks() as $task) {
-            $filePath = $fileRepository->getFrameImagePath($task, $imageFormats[$project->getFormat()]);
+            $filePath = $fileRepository->getFrameImagePath($task);
             $zip->addFile($filePath, basename($filePath));
         }
         $zip->close();

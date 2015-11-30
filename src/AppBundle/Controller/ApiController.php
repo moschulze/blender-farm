@@ -45,8 +45,8 @@ class ApiController extends Controller
         $task->getProject()->setStatus(Project::STATUS_RENDERING);
         $this->getDoctrine()->getManager()->flush();
 
-        $fileRepository = new ProjectFileRepository();
-        $filePath = $fileRepository->getProjectFilePath($task->getProject()->getId());
+        $fileRepository = $this->get('project_file_repository');
+        $filePath = $fileRepository->getProjectFilePath($task->getProject());
 
         return new JsonResponse(array(
             'status' => 'ok',
@@ -61,8 +61,14 @@ class ApiController extends Controller
 
     public function  projectAction($id)
     {
-        $fileRepository = new ProjectFileRepository();
-        $filePath = $fileRepository->getProjectFilePath($id);
+        $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
+
+        if(is_null($project)) {
+            throw new NotFoundHttpException('Project with id ' . $id);
+        }
+
+        $fileRepository = $this->get('project_file_repository');
+        $filePath = $fileRepository->getProjectFilePath($project);
 
         if(!file_exists($filePath)) {
             throw new FileNotFoundException($filePath);
@@ -82,16 +88,11 @@ class ApiController extends Controller
             throw new NotFoundHttpException('Task with id ' . $id);
         }
 
-        $imageFormats = $this->getParameter('image_formats');
-        $fileExtension = $imageFormats[$task->getProject()->getFormat()];
-
         $file = $request->files->get('file');
-        $fileRepository = new ProjectFileRepository();
+        $fileRepository = $this->get('project_file_repository');
         $fileRepository->addFrameImage(
             $file,
-            $task->getProject()->getId(),
-            $task->getFrameNumber(),
-            $fileExtension
+            $task
         );
 
         $task->setStatus(Task::STATUS_FINISHED);

@@ -15,3 +15,6 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    # The path to the filder where the blender files and rendered images will be stored
+    file_path: /path/to/file/directory/

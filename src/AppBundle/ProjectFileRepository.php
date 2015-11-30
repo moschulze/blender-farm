@@ -2,6 +2,7 @@
 
 namespace AppBundle;
 
+use AppBundle\Entity\Project;
 use AppBundle\Entity\Task;
 use Symfony\Component\HttpFoundation\File\File;
 
@@ -11,38 +12,56 @@ class ProjectFileRepository
 
     private $frameNumberLength = 5;
 
-    public function __construct()
+    private $imageFormats = array();
+
+    public function __construct($path)
     {
-        $this->path = __DIR__ . '/../../files/';
+        $this->path = rtrim($path, '/') . '/';
     }
 
-    public function getProjectFilePath($projectId)
+    public function getProjectFilePath(Project $project)
     {
-        return $this->path . $projectId . '/project.blend';
+        return $this->path . $project->getId() . '/project.blend';
     }
 
-    public function addProjectFile(File $file, $projectId)
+    public function addProjectFile(File $file, Project $project)
     {
-        if(!file_exists($this->path . $projectId)) {
-            mkdir($this->path . $projectId);
+        if(!file_exists($this->path . $project->getId())) {
+            mkdir($this->path . $project->getId());
         }
-        $file->move($this->path . $projectId, 'project.blend');
+        $file->move($this->path . $project->getId(), 'project.blend');
     }
 
-    public function addFrameImage(File $file, $projectId, $frameNumber, $extension)
+    public function addFrameImage(File $file, Task $task)
     {
-        $fileName = sprintf("frame_%'.0" . $this->frameNumberLength . "d", $frameNumber) . '.' . $extension;
-        $file->move($this->path . $projectId, $fileName);
+        $fileName = sprintf(
+                "frame_%'.0" . $this->frameNumberLength . "d",
+                $task->getFrameNumber()
+        );
+        $fileName .= '.' . $this->imageFormats[$task->getProject()->getFormat()];
+        $file->move($this->path . $task->getProject()->getId(), $fileName);
     }
 
-    public function getFrameImagePath(Task $task, $extension)
+    public function getFrameImagePath(Task $task)
     {
-        $fileName = sprintf("frame_%'.0" . $this->frameNumberLength . "d.%s", $task->getFrameNumber(), $extension);
+        $fileName = sprintf(
+            "frame_%'.0" . $this->frameNumberLength . "d.%s",
+            $task->getFrameNumber(),
+            $this->imageFormats[$task->getProject()->getFormat()]
+        );
         $path = $this->path . $task->getProject()->getId() . '/' . $fileName;
         if(!file_exists($path)) {
             return null;
         }
 
         return $path;
+    }
+
+    /**
+     * @param array $imageFormats
+     */
+    public function setImageFormats($imageFormats)
+    {
+        $this->imageFormats = $imageFormats;
     }
 }
