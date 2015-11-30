@@ -59,7 +59,6 @@ Congratulations, You successfully installed the manage server for your BlenderFa
 - Pagination for overview page
 - API-Keys for clients
 - User management / Login
-- CPU / GPU rendering
 - Tiled rendering of stills
 - Better error handling
 - Installer
