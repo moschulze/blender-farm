@@ -7,7 +7,9 @@ $(document).ready(function() {
                 url: statusUrl
             }).done(function(data){
                 var allFinished = true;
-                $.each(data, function(index, value) {
+                $("#status").text("Status: " + data.status);
+
+                $.each(data.tasks, function(index, value) {
                     var $row = $("#"+value.id);
                     var $children = $row.children();
                     var backgroundClass = "";
@@ -36,6 +38,7 @@ $(document).ready(function() {
                 });
 
                 if(allFinished) {
+                    $table.parent().before('<a class="btn btn-primary" href="' + downloadUrl + '">Download result</a>');
                     return;
                 }
 

@@ -3,7 +3,7 @@
 {% block body %}
     <h1>{{ project.name }} details</h1>
     <p><a href="{{ path('project_index') }}" class="btn btn-primary">Back to overview</a></p>
-    <p>Status: {{ project.status }}</p>
+    <p id="status">Status: {{ project.status }}</p>
     <p>Format: {{ project.format }}</p>
     <p>Engine: {{ project.engine }}</p>
     {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_NEW') %}
@@ -64,6 +64,7 @@
         var statusUrl = "{{ path('project_status_ajax', {'id': project.id}) }}";
         var projectStatus = "{{ project.status }}";
         var imageUrl = "{{ path('task_image', {'id': 42}) }}";
+        var downloadUrl = "{{ path('project_download', {'id': project.id}) }}";
     </script>
     <script src="{{ asset('script/project_detail.js') }}"></script>
 {% endblock %}

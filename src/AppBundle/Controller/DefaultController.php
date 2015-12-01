@@ -171,9 +171,9 @@ class DefaultController extends Controller
             throw new NotFoundHttpException('Project with id ' . $id);
         }
 
-        $data = array();
+        $tasks = array();
         foreach($project->getTasks() as $task) {
-            $data[] = array(
+            $tasks[] = array(
                 'id' => $task->getId(),
                 'frameNumber' => $task->getFrameNumber(),
                 'status' => $task->getStatus(),
@@ -182,6 +182,11 @@ class DefaultController extends Controller
                 'progress' => $task->getProgress()
             );
         }
+
+        $data = array(
+            'status' => $project->getStatus(),
+            'tasks' => $tasks
+        );
 
         return new JsonResponse($data);
     }
