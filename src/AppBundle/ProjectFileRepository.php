@@ -4,6 +4,7 @@ namespace AppBundle;
 
 use AppBundle\Entity\Project;
 use AppBundle\Entity\Task;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 
 class ProjectFileRepository
@@ -55,6 +56,13 @@ class ProjectFileRepository
         }
 
         return $path;
+    }
+
+    public function deleteProjectFiles(Project $project)
+    {
+        $path = $this->path . $project->getId();
+        $fs = new Filesystem();
+        $fs->remove($path);
     }
 
     /**

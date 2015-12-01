@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use AppBundle\Entity\Project;
-use AppBundle\ProjectFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -193,5 +192,26 @@ class DefaultController extends Controller
         );
 
         return new JsonResponse($data);
+    }
+
+    public function projectDeleteAction($id)
+    {
+        $manager = $this->getDoctrine()->getManager();
+        $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
+
+        if(is_null($project)) {
+            throw new NotFoundHttpException('Project with id ' . $id . ' not found');
+        }
+
+        $this->get('project_file_repository')->deleteProjectFiles($project);
+
+        foreach($project->getTasks() as $task) {
+            $manager->remove($task);
+        }
+
+        $manager->remove($project);
+        $manager->flush();
+
+        return $this->redirectToRoute('project_index');
     }
 }

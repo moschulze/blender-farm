@@ -10,6 +10,7 @@
                 <td>Format</td>
                 <td>Frames</td>
                 <td>Status</td>
+                <td>&nbsp;</td>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +28,11 @@
                     <td>{{ project.format }}</td>
                     <td>{{ (project.frameEnd - project.frameStart) + 1 }}</td>
                     <td>{{ project.status }}</td>
+                    <td>
+                        <a href="{{ path('project_delete', {'id': project.id}) }}">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -10,14 +10,20 @@ project_add:
   path: /projects/add
   defaults: { _controller: AppBundle:Default:projectAdd }
 
+project_delete:
+  path: /projects/{id}/delete
+  defaults: { _controller: AppBundle:Default:projectDelete }
+  requirements:
+    id: \d+
+
 project_detail:
-  path: /projects/show/{id}
+  path: /projects/{id}/show
   defaults: { _controller: AppBundle:Default:projectDetail }
   requirements:
     id: \d+
 
 project_download:
-  path: /projects/download/{id}
+  path: /projects/{id}/download
   defaults: { _controller: AppBundle:Default:projectDownload }
   requirements:
     id: \d+
