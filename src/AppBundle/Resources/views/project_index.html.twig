@@ -14,7 +14,15 @@
         </thead>
         <tbody>
             {% for project in projects %}
-                <tr>
+                {% set background = '' %}
+                {% set showImage = false %}
+                {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_FINISHED') %}
+                    {% set background = 'success' %}
+                    {% set showImage = true %}
+                {% elseif project.status == constant('AppBundle\\Entity\\Project::STATUS_RENDERING') %}
+                    {% set background = 'info' %}
+                {% endif %}
+                <tr class="{{ background }}">
                     <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.name }}</a></td>
                     <td>{{ project.format }}</td>
                     <td>{{ (project.frameEnd - project.frameStart) + 1 }}</td>
