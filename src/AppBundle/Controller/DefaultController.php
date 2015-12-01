@@ -140,6 +140,10 @@ class DefaultController extends Controller
             throw new NotFoundHttpException('Project with id ' . $id);
         }
 
+        if($project->getStatus() !== Project::STATUS_FINISHED) {
+            throw new NotFoundHttpException('Project with id ' . $id . ' not finished');
+        }
+
         $file = tempnam('tmp', md5(microtime() . rand()));
         $zip = new \ZipArchive();
         $zip->open($file, \ZipArchive::OVERWRITE);
