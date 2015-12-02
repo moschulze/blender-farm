@@ -24,9 +24,9 @@ class ApiController extends Controller
 
     public function  workAction()
     {
-        $tasks = $this->getDoctrine()->getRepository('AppBundle:Task')->findByStatus(Task::STATUS_PENDING);
+        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->getNextPendingTask();
 
-        if(empty($tasks)) {
+        if(is_null($task)) {
             return new JsonResponse(array(
                 'status' => 'nothing to do',
                 'id' => 0,
@@ -37,9 +37,6 @@ class ApiController extends Controller
                 'md5' => ''
             ));
         }
-
-        /** @var Task $task */
-        $task = array_shift($tasks);
 
         $task->setStatus(Task::STATUS_RENDERING);
         $task->getProject()->setStatus(Project::STATUS_RENDERING);
