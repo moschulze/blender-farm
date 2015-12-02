@@ -100,8 +100,8 @@ class ApiController extends Controller
         $task->setProgress(1);
         $task->setRuntime($request->get('runtime'));
 
-        $unfinishedTasks = $taskRepository->findUnfinishedTasksByProject($task->getProject());
-        if(empty($unfinishedTasks)) {
+        $unfinishedTasks = $taskRepository->countUnfinishedTasksByProject($task->getProject());
+        if($unfinishedTasks == 1) {
             $task->getProject()->setStatus(Project::STATUS_FINISHED);
         }
 
