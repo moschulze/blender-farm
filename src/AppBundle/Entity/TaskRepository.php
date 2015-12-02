@@ -32,6 +32,10 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery()
             ->getSingleScalarResult();
 
+        if($count == 0) {
+            return null;
+        }
+
         return $this->createQueryBuilder('t')
             ->select()
             ->where('t.status = :status')
