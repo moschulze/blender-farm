@@ -1,14 +1,6 @@
 parameters:
-  image_formats:
-    PNG: png
-    JPEG: jpg
-  rendering_engines:
-    BLENDER_RENDER: Blender Render
-    CYCLES: Cycles
 
 services:
   project_file_repository:
     class: AppBundle\ProjectFileRepository
     arguments: [ %file_path% ]
-    calls:
-      - [ setImageFormats, [%image_formats%] ]

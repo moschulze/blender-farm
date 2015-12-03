@@ -14,6 +14,16 @@ class Project
     const STATUS_STOPPED    = 'STOPPED';
     const STATUS_FINISHED   = 'FINISHED';
 
+    public static $imageFormats = array(
+        'PNG' => 'png',
+        'JPEG' => 'jpg'
+    );
+
+    public static $engines = array(
+        'BLENDER_RENDER' => 'Blender Render',
+        'CYCLES' => 'Cycles'
+    );
+
     /**
      * @var integer
      */
@@ -220,6 +230,15 @@ class Project
     {
         return $this->format;
     }
+
+    /**
+     * @return array
+     */
+    public static function getImageFormats()
+    {
+        return array_keys(self::$imageFormats);
+    }
+
     /**
      * @var string
      */
@@ -248,5 +267,13 @@ class Project
     public function getEngine()
     {
         return $this->engine;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getEngines()
+    {
+        return array_keys(self::$engines);
     }
 }
