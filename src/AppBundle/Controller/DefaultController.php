@@ -60,7 +60,9 @@ class DefaultController extends Controller
             $file = $request->files->get('file');
             $fileRepository = $this->get('project_file_repository');
             $fileRepository->addProjectFile($file, $project);
-            return $this->redirectToRoute('project_index');
+            return $this->redirectToRoute('project_detail', array(
+                'id' => $project->getId()
+            ));
         }
 
         return $this->render('AppBundle::project_add_edit.html.twig', array(
