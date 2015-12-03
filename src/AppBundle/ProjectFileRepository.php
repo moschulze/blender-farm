@@ -13,11 +13,12 @@ class ProjectFileRepository
 
     private $frameNumberLength = 5;
 
-    private $imageFormats = array();
+    private $imageFormats;
 
     public function __construct($path)
     {
         $this->path = rtrim($path, '/') . '/';
+        $this->imageFormats = Project::$imageFormats;
     }
 
     public function getProjectFilePath(Project $project)
@@ -63,13 +64,5 @@ class ProjectFileRepository
         $path = $this->path . $project->getId();
         $fs = new Filesystem();
         $fs->remove($path);
-    }
-
-    /**
-     * @param array $imageFormats
-     */
-    public function setImageFormats($imageFormats)
-    {
-        $this->imageFormats = $imageFormats;
     }
 }
