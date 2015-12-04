@@ -1,0 +1,10 @@
+{
+  "name": "BlenderFarm",
+  "version": "1.0.0",
+  "description": "The frontend components for the BlenderFarm",
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "grunt-sass": "~1.1.0-beta",
+    "grunt-contrib-watch": "~0.6.1"
+  }
+}

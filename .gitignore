@@ -12,3 +12,6 @@
 /composer.lock
 /web/files/*
 !/web/files/.gitkeep
+node_modules
+bower_components
+/src/AppBundle/Resources/public

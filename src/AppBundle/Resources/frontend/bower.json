@@ -1,0 +1,25 @@
+{
+  "name": "BlenderFarm",
+  "version": "1.0.0",
+  "authors": [
+    "Moritz Schulze"
+  ],
+  "description": "The frontend components for the BlenderFarm",
+  "main": "../style/screen.css",
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "devDependencies": {
+    "bootstrap-sass": "~3.3.5",
+    "jquery": "~2.1.4"
+  }
+}
