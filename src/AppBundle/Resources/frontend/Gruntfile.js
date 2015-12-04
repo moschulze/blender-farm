@@ -31,12 +31,21 @@ module.exports = function(grunt) {
                     spawn: false
                 }
             }
+        },
+        copy: {
+            fonts: {
+                expand: true,
+                flatten: true,
+                src: ['bower_components/bootstrap-sass/assets/fonts/bootstrap/*'],
+                dest: '../public/fonts/bootstrap/'
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 
-    grunt.registerTask('default', ['sass:build']);
+    grunt.registerTask('default', ['sass:build', 'copy:fonts']);
     grunt.registerTask('dev', ['sass:dev']);
 };
