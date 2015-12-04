@@ -4,12 +4,12 @@ AppBundle\Entity\Project:
       - NotBlank:
           message: Please enter a a name
     frameStart:
-      - Type:
-          type: integer
+      - Regex:
+          pattern: '~^\d+$~'
           message: Please enter a valid number
     frameEnd:
-      - Type:
-          type: integer
+      - Regex:
+          pattern: '~^\d+$~'
           message: Please enter a valid number
     format:
       - NotBlank:
