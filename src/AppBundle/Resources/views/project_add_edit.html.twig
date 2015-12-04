@@ -3,39 +3,53 @@
 {% block body %}
 <h1>{% if project.id > 0 %}Edit{% else %}Add{% endif %}</h1>
 <form method="post" enctype="multipart/form-data">
-    <div class="form-group">
+
+    <div class="form-group{% if errors.name is defined %} has-error{% endif %}">
         <label for="name">Name</label>
-        <input type="text" class="form-control"  name="name" id="name">
+        <input type="text" class="form-control"  name="name" id="name" value="{{ project.name }}">
+        {% if errors.name is defined %}<span class="help-block">{{ errors.name.message }}</span>{% endif %}
     </div>
-    <div class="form-group">
+
+    <div class="form-group{% if errors.file is defined %} has-error{% endif %}">
         <label for="file">Blender file</label>
         <input type="file" name="file" id="file">
+        {% if errors.file is defined %}<span class="help-block">{{ errors.file.message }}</span>{% endif %}
     </div>
-    <div class="form-group">
+
+    <div class="form-group{% if errors.frameStart is defined %} has-error{% endif %}">
         <label for="frameStart">First frame</label>
-        <input type="text" class="form-control"  name="frameStart" id="frameStart">
+        <input type="text" class="form-control"  name="frameStart" id="frameStart" value="{{ project.frameStart }}">
+        {% if errors.frameStart is defined %}<span class="help-block">{{ errors.frameStart.message }}</span>{% endif %}
     </div>
-    <div class="form-group">
+
+    <div class="form-group{% if errors.frameEnd is defined %} has-error{% endif %}">
         <label for="frameEnd">Last frame</label>
-        <input type="text" class="form-control"  name="frameEnd" id="frameEnd">
+        <input type="text" class="form-control"  name="frameEnd" id="frameEnd" value="{{ project.frameEnd }}">
+        {% if errors.frameEnd is defined %}<span class="help-block">{{ errors.frameEnd.message }}</span>{% endif %}
     </div>
-    <div class="form-group">
+
+    <div class="form-group{% if errors.format is defined %} has-error{% endif %}">
         <label for="format">Image format</label>
         <select name="format" class="form-control"  id="format">
             {% for key, value in imageFormats %}
-                <option value="{{ key }}">{{ key }} (.{{ value }})</option>
+                <option value="{{ key }}"{% if project.format == key %} selected{% endif %}>{{ key }} (.{{ value }})</option>
             {% endfor %}
         </select>
+        {% if errors.format is defined %}<span class="help-block">{{ errors.format.message }}</span>{% endif %}
     </div>
-    <div class="form-group">
+
+    <div class="form-group{% if errors.engine is defined %} has-error{% endif %}">
         <label for="engine">Rendering Engine</label>
         <select name="engine" class="form-control"  id="engine">
             {% for key, value in renderingEngines %}
-                <option value="{{ key }}">{{ value }}</option>
+                <option value="{{ key }}"{% if project.engine == key %} selected{% endif %}>{{ value }}</option>
             {% endfor %}
         </select>
+        {% if errors.engine is defined %}<span class="help-block">{{ errors.engine.message }}</span>{% endif %}
     </div>
+
     <button type="submit" class="btn btn-primary">Add</button>
     <a href="{{ path('project_index') }}" class="btn btn-default">Cancel</a>
+
 </form>
 {% endblock %}

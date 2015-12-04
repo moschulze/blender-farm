@@ -1,0 +1,25 @@
+AppBundle\Entity\Project:
+  properties:
+    name:
+      - NotBlank:
+          message: Please enter a a name
+    frameStart:
+      - Type:
+          type: integer
+          message: Please enter a valid number
+    frameEnd:
+      - Type:
+          type: integer
+          message: Please enter a valid number
+    format:
+      - NotBlank:
+          message: Please choose an image format
+      - Choice:
+          callback: getImageFormats
+          message: Please choose an image format from the list
+    engine:
+      - NotBlank:
+          message: Please choose a rendering engine
+      - Choice:
+          callback: getEngines
+          message: Please choose a rendering engine from the list

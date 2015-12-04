@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
+use Symfony\Component\Validator\ConstraintViolation;
 
 class DefaultController extends Controller
 {
@@ -42,9 +43,8 @@ class DefaultController extends Controller
 
     public function projectAddAction(Request $request)
     {
-        $imageFormats = $this->getParameter('image_formats');
-        $renderingEngines = $this->getParameter('rendering_engines');
         $project = new Project();
+        $errors = array();
 
         if($request->getMethod() == Request::METHOD_POST) {
             $project->setName($request->get('name'));
@@ -53,22 +53,50 @@ class DefaultController extends Controller
             $project->setFormat($request->get('format'));
             $project->setEngine($request->get('engine'));
             $project->setStatus(Project::STATUS_NEW);
-            $this->getDoctrine()->getManager()->persist($project);
-            $this->getDoctrine()->getManager()->flush();
+
+            $validator = $this->get('validator');
+            $violations = $validator->validate($project);
 
             /** @var UploadedFile $file */
-            $file = $request->files->get('file');
-            $fileRepository = $this->get('project_file_repository');
-            $fileRepository->addProjectFile($file, $project);
-            return $this->redirectToRoute('project_detail', array(
-                'id' => $project->getId()
-            ));
+            $file = null;
+            if(
+                !$request->files->has('file')
+                || is_null($request->files->get('file'))
+                || $request->files->get('file')->getClientOriginalExtension() != 'blend'
+            ) {
+                $errors['file'] = new ConstraintViolation(
+                    'Please upload a valid blender file',
+                    'Please upload a valid blender file',
+                    array(),
+                    $project,
+                    'file',
+                    null
+                );
+            } else {
+                $file = $request->files->get('file');
+            }
+
+            foreach($violations as $violation) {
+                $errors[$violation->getPropertyPath()] = $violation;
+            }
+
+            if(empty($errors)) {
+                $this->getDoctrine()->getManager()->persist($project);
+                $this->getDoctrine()->getManager()->flush();
+
+                $fileRepository = $this->get('project_file_repository');
+                $fileRepository->addProjectFile($file, $project);
+                return $this->redirectToRoute('project_detail', array(
+                    'id' => $project->getId()
+                ));
+            }
         }
 
         return $this->render('AppBundle::project_add_edit.html.twig', array(
             'project' => $project,
-            'imageFormats' => $imageFormats,
-            'renderingEngines' => $renderingEngines
+            'imageFormats' => Project::$imageFormats,
+            'renderingEngines' => Project::$engines,
+            'errors' => $errors
         ));
     }
 
