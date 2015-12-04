@@ -52,6 +52,26 @@ To create the required database schema run:
 app/console doctrine:schema:create
 ```
 
+###Building the frontend
+To build the frontend you need [node.js](https://nodejs.org) and the node package manager npm. On Ubuntu it can be installed by running the following commands:
+
+```sh
+sudo apt-get update
+sudo apt-get install nodejs npm
+```
+
+The second tool you need to install is the [Grunt](http://gruntjs.com) taskrunner CLI:
+
+```sh
+sudo npm install -g grunt-cli
+```
+
+Now that you have all the tools ready you can build the frontend. To do so simply run the following script in the project root:
+
+```sh
+./build_frontend.sh
+```
+
 ###Done
 Congratulations, You successfully installed the manage server for your BlenderFarm!
 
