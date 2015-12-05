@@ -9,7 +9,7 @@
     {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_NEW') %}
     <form method="post" action="{{ path('project_queue') }}">
         <input type="hidden" name="id" value="{{ project.id }}">
-        <input type="submit">
+        <button type="submit" class="btn btn-primary">Queue project tasks</button>
     </form>
     {% endif %}
     {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_FINISHED') %}
