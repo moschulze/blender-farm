@@ -2,6 +2,13 @@ index:
   path: /
   defaults: { _controller: AppBundle:Default:index }
 
+login:
+  path: /login
+  defaults: { _controller: AppBundle:Default:login }
+
+login_check:
+  path: /login_check
+
 project_index:
   path: /projects
   defaults: { _controller: AppBundle:Default:projectIndex }

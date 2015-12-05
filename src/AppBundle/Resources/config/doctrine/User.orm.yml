@@ -1,0 +1,28 @@
+AppBundle\Entity\User:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        username:
+            type: string
+            length: '20'
+        password:
+            type: string
+            length: '100'
+        salt:
+            type: string
+            length: '60'
+        email:
+            type: string
+            length: '100'
+        role:
+            type: string
+            length: '20'
+        isActive:
+            type: boolean
+    lifecycleCallbacks: {  }
