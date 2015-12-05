@@ -1,6 +1,6 @@
 $(document).ready(function() {
     var $table = $(".project-detail-table");
-    if(projectStatus != "FINISHED" && $table.length > 0) {
+    if($table.length > 0 && projectStatus != "FINISHED") {
         (function(){
             var callee = arguments.callee;
             $.ajax({
