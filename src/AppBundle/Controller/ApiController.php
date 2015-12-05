@@ -4,7 +4,6 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use AppBundle\Entity\Project;
-use AppBundle\ProjectFileRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -97,9 +96,10 @@ class ApiController extends Controller
         $task->setProgress(1);
         $task->setRuntime($request->get('runtime'));
 
-        $unfinishedTasks = $taskRepository->countUnfinishedTasksByProject($task->getProject());
-        if($unfinishedTasks == 1) {
+        if($taskRepository->countUnfinishedTasksByProject($task->getProject()) == 1) {
             $task->getProject()->setStatus(Project::STATUS_FINISHED);
+        } elseif ($taskRepository->countRenderingTasksByProject($task->getProject()) == 1) {
+            $task->getProject()->setStatus(Project::STATUS_QUEUED);
         }
 
         $this->getDoctrine()->getManager()->flush();
