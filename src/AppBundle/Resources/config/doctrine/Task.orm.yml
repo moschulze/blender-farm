@@ -24,7 +24,7 @@ AppBundle\Entity\Task:
     manyToOne:
         project:
             targetEntity: AppBundle\Entity\Project
-            inversedBy: frames
+            inversedBy: tasks
             joinColumn:
                 name: projectId
                 referencedColumnName: id
