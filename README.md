@@ -72,6 +72,15 @@ Now that you have all the tools ready you can build the frontend. To do so simpl
 ./build_frontend.sh
 ```
 
+###Add a user
+To manage the projects you need a user account. To create one simply run
+
+```sh
+app/console user:add
+```
+
+and provide the requested data.
+
 ###Done
 Congratulations, You successfully installed the manage server for your BlenderFarm!
 
