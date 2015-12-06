@@ -37,7 +37,7 @@ class AddUserCommand extends ContainerAwareCommand
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($encoder->encodePassword($user, $password));
-        $user->setRole('ROLE_USER');
+        $user->setRole('ROLE_ADMIN');
 
         $doctrine->getManager()->persist($user);
         $doctrine->getManager()->flush();
