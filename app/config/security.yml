@@ -28,6 +28,9 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login_check
+            logout:
+                path: /logout
+                target: /
             remember_me:
                 secret: "%secret%"
                 path: /
