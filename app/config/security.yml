@@ -14,7 +14,11 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        login_firewall:
+        api:
+            pattern:   ^/api
+            anonymous: ~
+
+        login:
             pattern:   ^/login$
             anonymous: ~
 
