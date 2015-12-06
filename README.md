@@ -1,7 +1,8 @@
 #BlenderFarm
 
 ##Please note
-**This software is not finished yet!**
+**This software is not finished yet!** 
+
 Don't use it in a production environment.
 
 ##Introduction
@@ -81,13 +82,14 @@ app/console user:add
 
 and provide the requested data.
 
+**Users added via console will automatically be administrators**
+
 ###Done
 Congratulations, You successfully installed the manage server for your BlenderFarm!
 
 ##ToDo
 - Pagination for overview page
 - API-Keys for clients
-- User management / Login
 - Tiled rendering of stills
 - Better error handling
 - Installer
