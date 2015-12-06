@@ -1,0 +1,39 @@
+{% macro render(pages, currentPage, routeName, pageParameterName) %}
+    {% if pages > 1 %}
+        {% set firstPageToDisplay = (currentPage - 2) %}
+        {% if firstPageToDisplay < 1 %}
+            {% set firstPageToDisplay = 1 %}
+        {% endif %}
+
+        {% set lastPageToDisplay = (currentPage + 2) %}
+        {% if lastPageToDisplay > pages %}
+            {% set lastPageToDisplay = pages %}
+        {% endif %}
+        <nav>
+            <ul class="pagination">
+                <li{% if currentPage == 1 %} class="disabled"{% endif %}>
+                    <a href="{% if currentPage == 1 %}#{% else %}{{ path((routeName), {(pageParameterName): currentPage-1}) }}{% endif %}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% if firstPageToDisplay > 1 %}
+                    <li class="disabled"><a href="#">&hellip;</a></li>
+                {% endif %}
+
+                {% for i in firstPageToDisplay..lastPageToDisplay %}
+                    <li{% if i == currentPage %} class="active"{% endif %}><a href="{{ path((routeName), {(pageParameterName): i}) }}">{{ i }}</a></li>
+                {% endfor %}
+
+                {% if lastPageToDisplay < pages %}
+                    <li class="disabled"><a href="#">&hellip;</a></li>
+                {% endif %}
+
+                <li{% if currentPage == pages %} class="disabled"{% endif %}>
+                    <a href="{% if currentPage == pages %}#{% else %}{{ path((routeName), {(pageParameterName): currentPage+1}) }}{% endif %}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endmacro %}

@@ -12,6 +12,12 @@ login_check:
 logout:
   path: /logout
 
+user_index:
+  path: /users/{page}
+  defaults: { _controller: AppBundle:User:index, page: 1 }
+  requirements:
+      page: \d+
+
 project_index:
   path: /projects
   defaults: { _controller: AppBundle:Default:projectIndex }

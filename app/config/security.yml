@@ -9,6 +9,9 @@ security:
                 class: AppBundle:User
                 property: username
 
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -37,3 +40,4 @@ security:
 
     access_control:
         - { path: ^/projects, roles: ROLE_USER }
+        - { path: ^/user, roles: ROLE_ADMIN }
