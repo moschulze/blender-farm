@@ -18,6 +18,16 @@ user_index:
   requirements:
       page: \d+
 
+user_add:
+  path: /user/add
+  defaults: { _controller: AppBundle:User:add }
+
+user_edit:
+  path: /user/{id}/edit
+  defaults: { _controller: AppBundle:User:edit }
+  requirements:
+    id: \d+
+
 project_index:
   path: /projects
   defaults: { _controller: AppBundle:Default:projectIndex }

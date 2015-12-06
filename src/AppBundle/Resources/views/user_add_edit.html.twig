@@ -1,0 +1,34 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h1>{% if user.id > 0 %}Edit{% else %}Add{% endif %} user</h1>
+    <form method="post" enctype="multipart/form-data">
+
+        <div class="form-group{% if errors.username is defined %} has-error{% endif %}">
+            <label for="username">Username</label>
+            <input type="text" class="form-control"  name="username" id="username" value="{{ user.username }}">
+            {% if errors.username is defined %}<span class="help-block">{{ errors.username.message }}</span>{% endif %}
+        </div>
+
+        <div class="form-group{% if errors.password is defined %} has-error{% endif %}">
+            <label for="password">Password</label>
+            <input type="password" class="form-control"  name="password" id="password">
+            {% if errors.password is defined %}<span class="help-block">{{ errors.password.message }}</span>{% endif %}
+        </div>
+
+        <div class="form-group{% if errors.email is defined %} has-error{% endif %}">
+            <label for="email">Email</label>
+            <input type="email" class="form-control"  name="email" id="email" value="{{ user.email }}">
+            {% if errors.email is defined %}<span class="help-block">{{ errors.email.message }}</span>{% endif %}
+        </div>
+
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="admin" value="true"{% if user.role == 'ROLE_ADMIN' %} checked{% endif %}> This user is an administrator
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{{ path('user_index') }}" class="btn btn-default">Cancel</a>
+    </form>
+{% endblock %}

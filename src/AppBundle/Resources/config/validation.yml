@@ -2,7 +2,7 @@ AppBundle\Entity\Project:
   properties:
     name:
       - NotBlank:
-          message: Please enter a a name
+          message: Please enter a name
     frameStart:
       - Regex:
           pattern: '~^\d+$~'
@@ -23,3 +23,17 @@ AppBundle\Entity\Project:
       - Choice:
           callback: getEngines
           message: Please choose a rendering engine from the list
+
+AppBundle\Entity\User:
+  properties:
+    username:
+      - NotBlank:
+          message: Please enter an username
+    password:
+      - NotBlank:
+          message: Please enter a password
+    email:
+      - NotBlank:
+          message: Please enter an email adress
+      - Email:
+          message: Please enter a valid mail address
