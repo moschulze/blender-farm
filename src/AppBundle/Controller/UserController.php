@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserController extends Controller
 {
@@ -84,6 +85,11 @@ class UserController extends Controller
     {
         $doctrine = $this->getDoctrine();
         $user = $doctrine->getRepository('AppBundle:User')->find($id);
+
+        if(is_null($user)) {
+            throw new NotFoundHttpException('The user with the id ' . $id . ' doesn\'t exist');
+        }
+
         $errors = array();
 
         if($request->getMethod() == 'POST') {
