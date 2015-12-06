@@ -29,7 +29,9 @@ class UserController extends Controller
 
         $users = $userRepository->findBy(
             array(),
-            array(),
+            array(
+                'username' => 'ASC'
+            ),
             $this->usersPerPage,
             ($page - 1) * $this->usersPerPage
         );
