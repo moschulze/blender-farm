@@ -26,12 +26,14 @@ $(document).ready(function() {
                     $($children[2]).text(value.runtime+"s");
                     $($children[3]).text(value.remaining+"s");
                     var $progressBar = $($children[4]).find(".progress-bar");
+                    var $noProgressBar = $($children[4]).find(".no-progress-bar");
                     var percent = Math.round(value.progress*100)+"%";
                     $progressBar.css("width", percent);
                     $progressBar.text(percent);
+                    $noProgressBar.text(percent);
 
                     if(value.status == "FINISHED") {
-                        $($children[5]).html('<a href="'+imageUrl.replace("42", value.id)+'" target="_blank">Show image</a>');
+                        $($children[1]).html('<a href="'+imageUrl.replace("42", value.id)+'" target="_blank">' + value.status + '</a>');
                     } else {
                         allFinished = false;
                     }
