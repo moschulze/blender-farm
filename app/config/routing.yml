@@ -28,6 +28,12 @@ user_edit:
   requirements:
     id: \d+
 
+user_delete:
+  path: /user/{id}/delete
+  defaults: { _controller: AppBundle:User:delete }
+  requirements:
+    id: \d+
+
 project_index:
   path: /projects
   defaults: { _controller: AppBundle:Default:projectIndex }

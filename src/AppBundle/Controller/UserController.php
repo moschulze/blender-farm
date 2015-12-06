@@ -127,4 +127,19 @@ class UserController extends Controller
             'errors' => $errors
         ));
     }
+
+    public function deleteAction($id)
+    {
+        $doctrine = $this->getDoctrine();
+        $user = $doctrine->getRepository('AppBundle:User')->find($id);
+
+        if(is_null($user)) {
+            throw new NotFoundHttpException('The user with the id ' . $id . ' doesn\'t exist');
+        }
+
+        $doctrine->getManager()->remove($user);
+        $doctrine->getManager()->flush();
+
+        return $this->redirectToRoute('user_index');
+    }
 }
