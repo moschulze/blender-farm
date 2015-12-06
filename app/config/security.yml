@@ -28,6 +28,9 @@ security:
             form_login:
                 login_path: /login
                 check_path: /login_check
+            remember_me:
+                secret: "%secret%"
+                path: /
 
     access_control:
         - { path: ^/projects, roles: ROLE_USER }
