@@ -20,18 +20,6 @@ class DefaultController extends Controller
         return $this->redirectToRoute('project_index');
     }
 
-    public function loginAction()
-    {
-        $authenticationUtils = $this->get('security.authentication_utils');
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->render('AppBundle::login.html.twig', array(
-            'error' => $error,
-            'lastUsername' => $lastUsername
-        ));
-    }
-
     public function projectIndexAction()
     {
         $projects = $this->getDoctrine()->getRepository('AppBundle:Project')->findAll();
