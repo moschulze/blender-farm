@@ -1,5 +1,7 @@
 {% extends 'AppBundle::base.html.twig' %}
 
+{% block navigation %}{% endblock %}
+
 {% block body %}
     <form class="form-signin" method="post" action="{{ path('login_check') }}">
         <h2 class="heading">Sign in</h2>

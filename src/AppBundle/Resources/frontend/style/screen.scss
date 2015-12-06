@@ -1,6 +1,10 @@
 @import "../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "login";
 
+body {
+  padding-top: 70px;
+}
+
 .project-detail-table {
   .progress {
     margin-bottom: 0;
