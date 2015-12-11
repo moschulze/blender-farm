@@ -1,0 +1,19 @@
+{% macro formatSeconds(inputSeconds) %}
+    {% spaceless %}
+        {% set hours = (inputSeconds / 3600)|round(0, 'floor') %}
+        {% if hours < 10 %}
+            {% set hours = '0' ~ hours %}
+        {% endif %}
+
+        {% set minutes = ((inputSeconds - (hours * 3600)) / 60)|round(0, 'floor') %}
+        {% if minutes < 10 %}
+            {% set minutes = '0' ~ minutes %}
+        {% endif %}
+
+        {% set seconds = (inputSeconds - (hours * 3600) - (minutes * 60))|round(0, 'floor') %}
+        {% if seconds < 10 %}
+            {% set seconds = '0' ~ seconds %}
+        {% endif %}
+        {{ hours }}:{{ minutes }}:{{ seconds }}
+    {% endspaceless %}
+{% endmacro %}

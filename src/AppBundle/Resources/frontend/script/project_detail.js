@@ -1,4 +1,12 @@
 $(document).ready(function() {
+    var formatSeconds = function(inputSeconds) {
+        var hours = Math.floor(inputSeconds / 3600);
+        var minutes = Math.floor((inputSeconds - (hours * 3600)) / 60);
+        var seconds = Math.floor(inputSeconds - (hours * 3600) - (minutes * 60));
+
+        return ("0" + hours).slice(-2) + ':' + ("0" + minutes).slice(-2) + ':' + ("0" + seconds).slice(-2);
+    };
+
     var $table = $(".project-detail-table");
     if($table.length > 0 && projectStatus != "FINISHED") {
         (function(){
@@ -23,8 +31,8 @@ $(document).ready(function() {
                     $row.addClass(backgroundClass);
 
                     $($children[1]).text(value.status);
-                    $($children[2]).text(value.runtime+"s");
-                    $($children[3]).text(value.remaining+"s");
+                    $($children[2]).text(formatSeconds(value.runtime));
+                    $($children[3]).text(formatSeconds(value.remaining));
                     var $progressBar = $($children[4]).find(".progress-bar");
                     var $noProgressBar = $($children[4]).find(".no-progress-bar");
                     var percent = Math.round(value.progress*100)+"%";
