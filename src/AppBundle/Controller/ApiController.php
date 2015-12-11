@@ -122,6 +122,7 @@ class ApiController extends Controller
         $task->setRuntime($request->get('runtime'));
         $task->setRemaining($request->get('remaining'));
         $task->setProgress($request->get('progress'));
+        $task->setLastReport(new \DateTime());
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(array(

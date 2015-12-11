@@ -122,6 +122,7 @@ class DefaultController extends Controller
             $task->setRuntime(0);
             $task->setRemaining(0);
             $task->setProgress(0);
+            $task->setLastReport(new \DateTime());
             $doctrine->getManager()->persist($task);
         }
 

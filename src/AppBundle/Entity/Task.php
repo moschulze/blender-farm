@@ -200,4 +200,33 @@ class Task
     {
         return $this->progress;
     }
+    /**
+     * @var \DateTime
+     */
+    private $lastReport;
+
+
+    /**
+     * Set lastReport
+     *
+     * @param \DateTime $lastReport
+     *
+     * @return Task
+     */
+    public function setLastReport($lastReport)
+    {
+        $this->lastReport = $lastReport;
+
+        return $this;
+    }
+
+    /**
+     * Get lastReport
+     *
+     * @return \DateTime
+     */
+    public function getLastReport()
+    {
+        return $this->lastReport;
+    }
 }

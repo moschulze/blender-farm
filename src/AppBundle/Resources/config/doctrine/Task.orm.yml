@@ -20,6 +20,8 @@ AppBundle\Entity\Task:
             type: float
         progress:
             type: float
+        lastReport:
+            type: datetime
 
     manyToOne:
         project:
