@@ -81,11 +81,12 @@ class DefaultController extends Controller
             }
 
             if(empty($errors)) {
+                $project->setMainFile($file->getClientOriginalName());
                 $this->getDoctrine()->getManager()->persist($project);
                 $this->getDoctrine()->getManager()->flush();
 
                 $fileRepository = $this->get('project_file_repository');
-                $fileRepository->addProjectFile($file, $project);
+                $fileRepository->addFileToProject($file, $project);
                 return $this->redirectToRoute('project_detail', array(
                     'id' => $project->getId()
                 ));
@@ -143,17 +144,17 @@ class DefaultController extends Controller
         }
 
         $fileRepository = $this->get('project_file_repository');
-        $imagePath = $fileRepository->getFrameImagePath($task);
+        $image = $fileRepository->getFrameImage($task);
 
-        if(is_null($imagePath)) {
+        if(is_null($image)) {
             throw new NotFoundHttpException('image for task with id ' . $id);
         }
 
         $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $mimeType = finfo_file($finfo, $imagePath);
+        $mimeType = finfo_file($finfo, $image->getRealPath());
         finfo_close($finfo);
         return new BinaryFileResponse(
-            $imagePath,
+            $image->getRealPath(),
             200,
             array(
                 'Content-Type' => $mimeType
@@ -178,8 +179,8 @@ class DefaultController extends Controller
         $zip = new \ZipArchive();
         $zip->open($file, \ZipArchive::OVERWRITE);
         foreach($project->getTasks() as $task) {
-            $filePath = $fileRepository->getFrameImagePath($task);
-            $zip->addFile($filePath, basename($filePath));
+            $file = $fileRepository->getFrameImage($task);
+            $zip->addFile($file->getRealPath(), $file->getBasename());
         }
         $zip->close();
 

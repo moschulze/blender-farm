@@ -276,4 +276,33 @@ class Project
     {
         return array_keys(self::$engines);
     }
+    /**
+     * @var string
+     */
+    private $mainFile;
+
+
+    /**
+     * Set mainFile
+     *
+     * @param string $mainFile
+     *
+     * @return Project
+     */
+    public function setMainFile($mainFile)
+    {
+        $this->mainFile = $mainFile;
+
+        return $this;
+    }
+
+    /**
+     * Get mainFile
+     *
+     * @return string
+     */
+    public function getMainFile()
+    {
+        return $this->mainFile;
+    }
 }

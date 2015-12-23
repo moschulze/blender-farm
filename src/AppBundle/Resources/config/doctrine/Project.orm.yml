@@ -24,6 +24,9 @@ AppBundle\Entity\Project:
         engine:
             type: string
             length: 20
+        mainFile:
+            type: string
+            length: 100
 
     oneToMany:
         tasks:

@@ -82,9 +82,9 @@ api_work_request:
   path: /api/work
   defaults: { _controller: AppBundle:Api:work }
 
-api_project:
-  path: /api/project/{id}
-  defaults: { _controller: AppBundle:Api:project }
+api_file:
+  path: /api/file/{id}/{filePath}
+  defaults: { _controller: AppBundle:Api:file }
   requirements:
     id: \d+
 

@@ -21,7 +21,7 @@ class ApiController extends Controller
         ));
     }
 
-    public function  workAction()
+    public function workAction()
     {
         $task = $this->getDoctrine()->getRepository('AppBundle:Task')->getNextPendingTask();
 
@@ -29,49 +29,53 @@ class ApiController extends Controller
             return new JsonResponse(array(
                 'status' => 'nothing to do',
                 'id' => 0,
-                'project' => 0,
+                'project' => array(),
                 'frame' => 0,
                 'format' => '',
-                'engine' => '',
-                'md5' => ''
+                'engine' => ''
             ));
         }
 
+        $fileRepository = $this->get('project_file_repository');
+        $files = $fileRepository->getFilesForProject($task->getProject());
+
         $task->setStatus(Task::STATUS_RENDERING);
+        $task->setLastReport(new \DateTime());
         $task->getProject()->setStatus(Project::STATUS_RENDERING);
         $this->getDoctrine()->getManager()->flush();
-
-        $fileRepository = $this->get('project_file_repository');
-        $filePath = $fileRepository->getProjectFilePath($task->getProject());
 
         return new JsonResponse(array(
             'status' => 'ok',
             'id' => $task->getId(),
-            'project' => $task->getProject()->getId(),
+            'project' => array(
+                'id' => $task->getProject()->getId(),
+                'mainFile' => $task->getProject()->getMainFile(),
+                'files' => $files
+            ),
             'frame' => $task->getFrameNumber(),
             'format' => $task->getProject()->getFormat(),
-            'engine' => $task->getProject()->getEngine(),
-            'md5' => md5(file_get_contents($filePath))
+            'engine' => $task->getProject()->getEngine()
         ));
     }
 
-    public function  projectAction($id)
+    public function fileAction($id, $filePath)
     {
         $project = $this->getDoctrine()->getRepository('AppBundle:Project')->find($id);
 
         if(is_null($project)) {
-            throw new NotFoundHttpException('Project with id ' . $id);
+            throw new NotFoundHttpException('Project with id ' . $id . ' does not exist.');
         }
 
+        $decodedFilePath = base64_decode(urldecode($filePath));
         $fileRepository = $this->get('project_file_repository');
-        $filePath = $fileRepository->getProjectFilePath($project);
+        $file = $fileRepository->getFileForProject($decodedFilePath, $project);
 
-        if(!file_exists($filePath)) {
-            throw new FileNotFoundException($filePath);
+        if(is_null($file)) {
+            throw new NotFoundHttpException('File ' . $decodedFilePath . ' not found in project with id ' . $id);
         }
 
-        $response = new BinaryFileResponse($filePath);
-        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'project.blend');
+        $response = new BinaryFileResponse($file->getRealPath());
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT);
         return $response;
     }
 
@@ -81,7 +85,7 @@ class ApiController extends Controller
         $task = $taskRepository->find($id);
 
         if(is_null($task)) {
-            throw new NotFoundHttpException('Task with id ' . $id);
+            throw new NotFoundHttpException('Task with id ' . $id . ' not found');
         }
 
         $file = $request->files->get('file');
