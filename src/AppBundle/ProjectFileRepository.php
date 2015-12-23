@@ -32,7 +32,9 @@ class ProjectFileRepository
         $projectPath = $this->getPathToProjectDirectory($project);
 
         if(!file_exists($projectPath)) {
-            mkdir($projectPath);
+            $old = umask(0);
+            mkdir($projectPath, 0777);
+            umask($old);
         }
 
         $fileName = $file->getFilename();
@@ -41,6 +43,8 @@ class ProjectFileRepository
         }
 
         $file->move($projectPath, $fileName);
+        $fileSystem = new Filesystem();
+        $fileSystem->chmod($projectPath . $fileName, 0666);
     }
 
     /**
@@ -60,7 +64,9 @@ class ProjectFileRepository
         $imageDirectoryPath = $projectPath . 'result/';
 
         if(!file_exists($imageDirectoryPath)) {
+            $old = umask(0);
             mkdir($imageDirectoryPath, 0777, true);
+            umask($old);
         }
 
         $imageFile->move($imageDirectoryPath, $fileName);
