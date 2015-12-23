@@ -179,8 +179,8 @@ class DefaultController extends Controller
         $zip = new \ZipArchive();
         $zip->open($file, \ZipArchive::OVERWRITE);
         foreach($project->getTasks() as $task) {
-            $file = $fileRepository->getFrameImage($task);
-            $zip->addFile($file->getRealPath(), $file->getBasename());
+            $imageFile = $fileRepository->getFrameImage($task);
+            $zip->addFile($imageFile->getRealPath(), $imageFile->getBasename());
         }
         $zip->close();
 

@@ -59,6 +59,10 @@ class ProjectFileRepository
 
         $imageDirectoryPath = $projectPath . 'result/';
 
+        if(!file_exists($imageDirectoryPath)) {
+            mkdir($imageDirectoryPath, 0777, true);
+        }
+
         $imageFile->move($imageDirectoryPath, $fileName);
     }
 
@@ -76,6 +80,7 @@ class ProjectFileRepository
         );
         $imageDirectoryPath = $projectPath . 'result/';
         $path = $imageDirectoryPath . $fileName;
+
         if(!file_exists($path)) {
             return null;
         }
