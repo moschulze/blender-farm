@@ -67,14 +67,14 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
      */
     public function findTasksWithTimeout()
     {
-        $thirtySecondsAgo = new \DateTime();
-        $thirtySecondsAgo->sub(new \DateInterval('PT30S'));
+        $sixtySecondsAgo = new \DateTime();
+        $sixtySecondsAgo->sub(new \DateInterval('PT60S'));
 
         return $this->createQueryBuilder('t')
             ->select()
             ->where('t.lastReport < :reportTime')
             ->andWhere('t.status = :statusRendering')
-            ->setParameter(':reportTime', $thirtySecondsAgo)
+            ->setParameter(':reportTime', $sixtySecondsAgo)
             ->setParameter(':statusRendering', Task::STATUS_RENDERING)
             ->getQuery()
             ->execute();
