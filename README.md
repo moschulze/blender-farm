@@ -61,10 +61,16 @@ sudo apt-get update
 sudo apt-get install nodejs npm
 ```
 
-The second tool you need to install is the [Grunt](http://gruntjs.com) taskrunner CLI:
+On Debian systems you also need to install the nodejs-legacy package:
 
 ```sh
-sudo npm install -g grunt-cli
+sudo apt-get install nodejs-legacy
+```
+
+The next tools you need to install are the [Grunt](http://gruntjs.com) taskrunner CLI and [Bower](http://www.bower.io):
+
+```sh
+sudo npm install -g grunt-cli bower
 ```
 
 Now that you have all the tools ready you can build the frontend. To do so simply run the following script in the project root:
