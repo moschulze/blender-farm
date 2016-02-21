@@ -41,22 +41,11 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getNextPendingTask()
     {
-        $count = $this->createQueryBuilder('t')
-            ->select('COUNT(t)')
-            ->where('t.status = :status')
-            ->setParameter(':status', Task::STATUS_PENDING)
-            ->getQuery()
-            ->getSingleScalarResult();
-
-        if($count == 0) {
-            return null;
-        }
-
         return $this->createQueryBuilder('t')
             ->select()
             ->where('t.status = :status')
             ->setParameter(':status', Task::STATUS_PENDING)
-            ->setFirstResult(rand(0, $count - 1))
+            ->orderBy('t.frameNumber', 'ASC')
             ->setMaxResults(1)
             ->getQuery()
             ->getSingleResult();
