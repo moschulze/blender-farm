@@ -5,6 +5,7 @@
     <h1>{{ project.name }} details</h1>
     <p><a href="{{ path('project_index') }}" class="btn btn-primary">Back to overview</a></p>
     <p id="status">Status: {{ project.status }}</p>
+    <p id="projectProgress">Progress: {{ (progress * 100)|number_format(0) }}%</p>
     <p>Format: {{ project.format }}</p>
     <p>Engine: {{ project.engine }}</p>
     {% if project.status == constant('AppBundle\\Entity\\Project::STATUS_NEW') %}

@@ -37,7 +37,8 @@ class DefaultController extends Controller
         }
 
         return $this->render('AppBundle::project_detail.html.twig', array(
-            'project' => $project
+            'project' => $project,
+            'progress' => $this->getDoctrine()->getRepository('AppBundle:Task')->getProgressByProject($project)
         ));
     }
 
@@ -220,6 +221,7 @@ class DefaultController extends Controller
 
         $data = array(
             'status' => $project->getStatus(),
+            'progress' => $this->getDoctrine()->getRepository('AppBundle:Task')->getProgressByProject($project),
             'tasks' => $tasks
         );
 
