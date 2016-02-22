@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\DBAL\LockMode;
+
 class TaskRepository extends \Doctrine\ORM\EntityRepository
 {
     /**
@@ -56,14 +58,19 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
     public function getNextPendingTask()
     {
         try {
-            return $this->createQueryBuilder('t')
+            $this->getEntityManager()->beginTransaction();
+            $result = $this->createQueryBuilder('t')
                 ->select()
                 ->where('t.status = :status')
                 ->setParameter(':status', Task::STATUS_PENDING)
                 ->orderBy('t.frameNumber', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
+                ->setLockMode(LockMode::PESSIMISTIC_WRITE)
                 ->getSingleResult();
+            $this->getEntityManager()->commit();
+
+            return $result;
         } catch(\Exception $e) {
             return null;
         }
