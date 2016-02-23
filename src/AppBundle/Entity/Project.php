@@ -305,4 +305,17 @@ class Project
     {
         return $this->mainFile;
     }
+
+    /**
+     * @return int
+     */
+    public function getRenderTime()
+    {
+        $runtime = 0;
+        /** @var Task $task */
+        foreach($this->tasks as $task) {
+            $runtime += $task->getRuntime();
+        }
+        return $runtime;
+    }
 }

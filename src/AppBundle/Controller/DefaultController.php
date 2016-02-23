@@ -222,6 +222,7 @@ class DefaultController extends Controller
         $data = array(
             'status' => $project->getStatus(),
             'progress' => $this->getDoctrine()->getRepository('AppBundle:Task')->getProgressByProject($project),
+            'renderTime' => $project->getRenderTime(),
             'tasks' => $tasks
         );
 

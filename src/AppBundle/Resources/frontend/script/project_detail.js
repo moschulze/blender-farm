@@ -17,6 +17,7 @@ $(document).ready(function() {
                 var allFinished = true;
                 $("#status").text("Status: " + data.status);
                 $("#projectProgress").text("Progress: " + Math.round(data.progress * 100) + "%");
+                $("#renderTime").text("Render Time: " + formatSeconds(data.renderTime));
 
                 $.each(data.tasks, function(index, value) {
                     var $row = $("#"+value.id);
