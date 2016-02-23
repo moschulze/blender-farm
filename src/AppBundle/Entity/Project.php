@@ -318,4 +318,17 @@ class Project
         }
         return $runtime;
     }
+
+    /**
+     * @return float
+     */
+    public function getProgress()
+    {
+        $progress = 0;
+        /** @var Task $task */
+        foreach($this->tasks as $task) {
+            $progress += $task->getProgress();
+        }
+        return ($progress / $this->tasks->count());
+    }
 }

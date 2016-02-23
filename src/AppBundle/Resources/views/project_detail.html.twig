@@ -5,7 +5,7 @@
     <h1>{{ project.name }} details</h1>
     <p><a href="{{ path('project_index') }}" class="btn btn-primary">Back to overview</a></p>
     <p id="status">Status: {{ project.status }}</p>
-    <p id="projectProgress">Progress: {{ (progress * 100)|number_format(0) }}%</p>
+    <p id="projectProgress">Progress: {{ (project.progress * 100)|number_format(0) }}%</p>
     <p id="renderTime">Render Time: {{ datetime.formatSeconds(project.renderTime) }}</p>
     <p>Format: {{ project.format }}</p>
     <p>Engine: {{ project.engine }}</p>

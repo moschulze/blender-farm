@@ -24,20 +24,6 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
 
     /**
      * @param Project $project
-     * @return double
-     */
-    public function getProgressByProject(Project $project)
-    {
-        return $this->createQueryBuilder('t')
-            ->select('AVG(t.progress)')
-            ->where('t.project = :project')
-            ->setParameter('project', $project)
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
-    /**
-     * @param Project $project
      * @return integer
      */
     public function countRenderingTasksByProject(Project $project)
