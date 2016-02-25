@@ -1,0 +1,22 @@
+<?php
+
+namespace AppBundle\Event;
+
+use AppBundle\Entity\Project;
+use Symfony\Component\EventDispatcher\Event;
+
+class RenderFinishedEvent extends Event
+{
+    /** @var Project */
+    private $project;
+
+    public function __construct(Project $project)
+    {
+        $this->project = $project;
+    }
+
+    public function getProject()
+    {
+        return $this->project;
+    }
+}

@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use AppBundle\Entity\Project;
+use AppBundle\Event\ProjectEvents;
+use AppBundle\Event\RenderFinishedEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -102,6 +104,10 @@ class ApiController extends Controller
 
         if($taskRepository->countUnfinishedTasksByProject($task->getProject()) == 1) {
             $task->getProject()->setStatus(Project::STATUS_FINISHED);
+            $this->get('event_dispatcher')->dispatch(
+                ProjectEvents::RENDER_FINISHED,
+                new RenderFinishedEvent($task->getProject())
+            );
         } elseif ($taskRepository->countRenderingTasksByProject($task->getProject()) == 1) {
             $task->getProject()->setStatus(Project::STATUS_QUEUED);
         }
