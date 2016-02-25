@@ -324,6 +324,10 @@ class Project
      */
     public function getProgress()
     {
+        if($this->tasks->count() == 0) {
+            return 0;
+        }
+
         $progress = 0;
         /** @var Task $task */
         foreach($this->tasks as $task) {
