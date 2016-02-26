@@ -4,6 +4,8 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Task;
 use AppBundle\Entity\Project;
+use AppBundle\Event\ProjectEvents;
+use AppBundle\Event\QueuedEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -129,6 +131,11 @@ class DefaultController extends Controller
 
         $project->setStatus(Project::STATUS_QUEUED);
         $doctrine->getManager()->flush();
+
+        $this->get('event_dispatcher')->dispatch(
+            ProjectEvents::QUEUED,
+            new QueuedEvent($project)
+        );
 
         return $this->redirectToRoute('project_detail', array(
             'id' => $project->getId()
