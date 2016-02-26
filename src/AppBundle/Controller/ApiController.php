@@ -6,6 +6,7 @@ use AppBundle\Entity\Task;
 use AppBundle\Entity\Project;
 use AppBundle\Event\ProjectEvents;
 use AppBundle\Event\RenderFinishedEvent;
+use AppBundle\Event\RenderStartedEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
@@ -25,7 +26,8 @@ class ApiController extends Controller
 
     public function workAction()
     {
-        $task = $this->getDoctrine()->getRepository('AppBundle:Task')->getNextPendingTask();
+        $taskRepository = $this->getDoctrine()->getRepository('AppBundle:Task');
+        $task = $taskRepository->getNextPendingTask();
 
         if(is_null($task)) {
             return new JsonResponse(array(
@@ -44,6 +46,16 @@ class ApiController extends Controller
         $task->setStatus(Task::STATUS_RENDERING);
         $task->setLastReport(new \DateTime());
         $task->getProject()->setStatus(Project::STATUS_RENDERING);
+
+        if ($taskRepository->countFinishedTasksByProject($task->getProject()) == 0
+            && $taskRepository->countRenderingTasksByProject($task->getProject()) == 0
+        ) {
+            $this->get('event_dispatcher')->dispatch(
+                ProjectEvents::RENDER_STARTED,
+                new RenderStartedEvent($task->getProject())
+            );
+        }
+
         $this->getDoctrine()->getManager()->flush();
 
         return new JsonResponse(array(
