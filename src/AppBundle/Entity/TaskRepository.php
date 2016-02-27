@@ -59,8 +59,9 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getNextPendingTask()
     {
+        $semaphore = sem_get(90210, 1, 0666, 1);
+        sem_acquire($semaphore);
         try {
-            $this->getEntityManager()->beginTransaction();
             $result = $this->createQueryBuilder('t')
                 ->select()
                 ->where('t.status = :status')
@@ -68,12 +69,11 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
                 ->orderBy('t.frameNumber', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
-                ->setLockMode(LockMode::PESSIMISTIC_WRITE)
                 ->getSingleResult();
-            $this->getEntityManager()->commit();
-
+            sem_release($semaphore);
             return $result;
         } catch(\Exception $e) {
+            sem_release($semaphore);
             return null;
         }
     }
