@@ -66,7 +66,7 @@ class TaskRepository extends \Doctrine\ORM\EntityRepository
                 ->select()
                 ->where('t.status = :status')
                 ->setParameter(':status', Task::STATUS_PENDING)
-                ->orderBy('t.frameNumber', 'ASC')
+                ->orderBy('t.id', 'ASC')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getSingleResult();
