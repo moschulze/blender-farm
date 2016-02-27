@@ -335,4 +335,26 @@ class Project
         }
         return ($progress / $this->tasks->count());
     }
+
+    /**
+     * @return double
+     */
+    public function getAverageFrameRenderingTime()
+    {
+        $count = 0;
+        $sum = 0;
+        /** @var Task $task */
+        foreach($this->tasks as $task) {
+            if($task->getStatus() == Task::STATUS_FINISHED) {
+                $count++;
+                $sum += $task->getRuntime();
+            }
+        }
+
+        if($count > 0) {
+            return $sum / $count;
+        }
+
+        return 0;
+    }
 }

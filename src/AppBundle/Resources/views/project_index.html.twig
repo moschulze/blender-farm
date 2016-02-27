@@ -8,10 +8,9 @@
         <thead>
             <tr>
                 <td>Name</td>
-                <td>Format</td>
-                <td>Frames</td>
                 <td>Status</td>
                 <td>Render Time</td>
+                <td>Time / Frame</td>
                 <td>Progress</td>
                 <td>&nbsp;</td>
             </tr>
@@ -28,10 +27,9 @@
                 {% endif %}
                 <tr class="{{ background }}">
                     <td><a href="{{ path('project_detail', { id: project.id }) }}">{{ project.name }}</a></td>
-                    <td>{{ project.format }}</td>
-                    <td>{{ (project.frameEnd - project.frameStart) + 1 }}</td>
                     <td>{{ project.status }}</td>
                     <td>{{ datetime.formatSeconds(project.renderTime) }}</td>
+                    <td>{{ datetime.formatSeconds(project.averageFrameRenderingTime) }}</td>
                     <td>{{ (project.progress * 100)|number_format(0) }}%</td>
                     <td>
                         <a href="{{ path('project_delete', {'id': project.id}) }}">
